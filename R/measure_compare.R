@@ -24,7 +24,7 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
   
   # Computation of variances of blup
   
-  v_blup <- VarBLUP(data_y2, model = model_1)
+  v_blup <- var_blup(data_y2, model = model_1)
   v_blup$v_blup <- v_blup$v_blup + vcov(model_1)[1, 1]
   v_blup$sd_blup <- sqrt(v_blup$v_blup)
   
