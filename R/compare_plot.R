@@ -1,4 +1,5 @@
 compare_plot <- function(object) {
+  print("Generating Comparison Plot ...")
   data_sub <- object$sub
   models <- object$models
   
