@@ -19,7 +19,6 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
   # Model 1: Mixed model for BLUP estimate of x
   model_1 <- lme4::lmer(y2 ~ 1 + (1 | id), data = data_y2,
                         na.action = na.exclude)
-  
   data_y2$y2_hat <- fitted(model_1)
   
   # Computation of variances of blup
@@ -146,8 +145,8 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
   data_y1$res_y1_corr_abs <- abs(data_y1$res_y1_corr)
   
   # Model 7: Variance function estimation for corrected y1
-  model_7 <- lm_robust(res_y1_corr_abs ~ y2_hat, data = data_y1,
-                       se_type = "stata", clusters = id)
+  model_7 <- estimatr::lm_robust(res_y1_corr_abs ~ y2_hat, data = data_y1,
+                                 se_type = "stata", clusters = id)
   model_7_coef <- coef(model_7)
   
   # Model coefficients & variance-covariance matrix

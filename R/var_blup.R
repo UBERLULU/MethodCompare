@@ -22,7 +22,7 @@ var_blup <- function(data, model) {
   for (i in unique(data$id)) {
     Zi <- Z[data$id == i, ]
     
-    Vi <- Zi %*% D %*% t(Zi) + R[data$id == i, data$id == i]
+    Vi <- Zi %*% D %*% Matrix::t(Zi) + R[data$id == i, data$id == i]
     
     invVi <- chol2inv(chol(Vi))
     
@@ -36,6 +36,6 @@ var_blup <- function(data, model) {
   vbi <- D %*% Zt %*% (invV - invV %*% X %*% chol2inv(chol(sumXWX)) %*%
                          t(X) %*% invV) %*% Z %*% D
   
-  return(data.frame(id = unique(data$id), v_blup = diag(D - vbi)))
+  return(data.frame(id = unique(data$id), v_blup = Matrix::diag(D - vbi)))
 }
 
