@@ -1,3 +1,18 @@
+#' Plot the precision of the methods
+#' 
+#' Plot the precision of the two methods along with their 95% confidence bands
+#'
+#' @inheritParams total_bias_plot
+#' 
+#' @export
+#'
+#' @examples
+#' ### Load the data
+#' data(data1)
+#' ### Analysis
+#' measure_model <- measure_compare(data1)
+#' ### Plot the precision of the two methods
+#' precision_plot(measure_model)
 precision_plot <- function(object) {
   print("Generating Precision Plot ...")
   

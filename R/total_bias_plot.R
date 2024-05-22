@@ -1,3 +1,18 @@
+#' Plot total bias
+#' 
+#' Plot total bias along with 95% confidence bands
+#'
+#' @param object list returned by \link{measure_compare} function.
+#' 
+#' @export
+#'
+#' @examples
+#' ### Load the data
+#' data(data1)
+#' ### Analysis
+#' measure_model <- measure_compare(data1)
+#' ### Plot the total bias
+#' total_bias_plot(measure_model)
 total_bias_plot <- function(object) {
   print("Generating Total Bias Plot ...")
   

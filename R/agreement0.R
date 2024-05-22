@@ -1,3 +1,19 @@
+#' Plot the agreement before recalibration
+#' 
+#' Plot the agreement and percentage agreement before recalibration along with
+#' 95% confidence bands.
+#'
+#' @inheritParams total_bias_plot
+#' 
+#' @export
+#'
+#' @examples
+#' ### Load the data
+#' data(data1)
+#' ### Analysis
+#' measure_model <- measure_compare(data1)
+#' ### Plot the agreement without recalibration
+#' agreement0(measure_model)
 agreement0 <- function(object) {
   print("Generating Agreement Plot without recalibration ...")
   

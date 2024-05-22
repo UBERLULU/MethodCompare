@@ -1,3 +1,19 @@
+#' Plot the percentage agreement after recalibration
+#' 
+#' Plot the percentage agreement after recalibration along with
+#' 95% confidence bands.
+#'
+#' @inheritParams total_bias_plot
+#' 
+#' @export
+#'
+#' @examples
+#' ### Load the data
+#' data(data1)
+#' ### Analysis
+#' measure_model <- measure_compare(data1)
+#' ### Plot the percentage agreement after recalibration
+#' pct_agreement0(measure_model)
 pct_agreement1 <- function(object) {
   print("Generating Percentage Agreement Plot after recalibration ...")
   

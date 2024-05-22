@@ -1,3 +1,20 @@
+#' Plot used to visualize the recalibration of the new method after estimating
+#' the bias
+#' 
+#' This function allows the visualization of the bias-corrected values (i.e.
+#' recalibrated values, variable y1_corr) of the new measurement method.
+#'
+#' @inheritParams total_bias_plot
+#' 
+#' @export
+#'
+#' @examples
+#' ### Load the data
+#' data(data1)
+#' ### Analysis
+#' measure_model <- measure_compare(data1)
+#' ### Plot the bias
+#' compare_plot(measure_model)
 compare_plot <- function(object) {
   print("Generating Comparison Plot ...")
   data_sub <- object$sub

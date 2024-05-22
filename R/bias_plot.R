@@ -1,3 +1,19 @@
+#' Plot the bias and measurements
+#' 
+#' Plot the bias and measurements from the two methods along with their 
+#' regression lines.
+#'
+#' @inheritParams total_bias_plot
+#' 
+#' @export
+#'
+#' @examples
+#' ### Load the data
+#' data(data1)
+#' ### Analysis
+#' measure_model <- measure_compare(data1)
+#' ### Plot the bias
+#' bias_plot(measure_model)
 bias_plot <- function(object) {
   print("Generating Bias Plot ...")
   

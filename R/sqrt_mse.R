@@ -1,3 +1,19 @@
+#' Plot the square root of the mean squared errors
+#' 
+#' Plot the square root of the mean squared errors from the two methods along
+#' with 95% confidence bands.
+#'
+#' @inheritParams total_bias_plot
+#' 
+#' @export
+#'
+#' @examples
+#' ### Load the data
+#' data(data1)
+#' ### Analysis
+#' measure_model <- measure_compare(data1)
+#' ### Plot the bias
+#' sqrt_mse(measure_model)
 sqrt_mse <- function(object) {
   print("Generating sqrtMSE Plot ...")
   

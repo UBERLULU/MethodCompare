@@ -1,3 +1,43 @@
+#' Process data and estimate models for method comparison
+#' 
+#' `measure_compare()` implements the new estimation procedure to asses the 
+#' agreement between the two measurement methods.
+#' 
+#' Details of the function
+#'
+#' @param data a required data frame containing at least three columns: the
+#' measurements for the two methods and ids.
+#' @param new an optional string. The column name containing the measurements of the new 
+#' method.
+#' @param ref an optional string. The column name containing the measurements of the 
+#' reference method (at least two measurements per individual).
+#' @param id an optional string. The column name containing the ids of individuals.
+#' @param nb_simul an optional number. The number of simulations used for confidence bands
+#' simulations.
+#'
+#' @return A list containing
+#' * `models`: a list of models
+#' * `sub`: the original data frame containing with renamed columns and 
+#'  additional computed data
+#' * `ref`: a data frame for the reference method and its related estimates
+#' * `y1_y2`: subset data frame of sub containing measurements for both 
+#'  methods, that is `y1` and `y2` columns are not NAs
+#' * `new`: a data frame for the new method and its related estimates
+#' * `agg`: a data frame made from ref and new containing a row per 
+#'  individual
+#' * `sim_params`: estimated model coefficients used afterward
+#' * `nb_simul`: the number of simulations used for confidence bands 
+#'  simulations
+#' * `bias`: differential and proportional bias
+#' 
+#' @export
+#'
+#' @examples
+#' ### Load the data
+#' data(data1)
+#' ### Analysis
+#' measure_model <- measure_compare(data1)
+
 measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 1000) {
   print("Computing differential and proportional biases")
   print(paste("id variable:", id))
@@ -202,8 +242,8 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
   return(list(models = list(model_1, model_2, model_3, model_4, model_5,
                             model_6,  model_7),
               sub = data_sub,
-              ref = data_y2, y1_y2 = data_y1_y2, agg = data_agg,
-              new = data_y1,
+              ref = data_y2, y1_y2 = data_y1_y2, new = data_y1,
+              agg = data_agg,
               sim_params = sim_params, nb_simul = nb_simul,
               bias = bias
   ))
