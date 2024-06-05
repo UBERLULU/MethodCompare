@@ -8,7 +8,7 @@ the bias}
 compare_plot(object)
 }
 \arguments{
-\item{object}{list returned by \link{measure_compare} function}
+\item{object}{list returned by \link{measure_compare} function.}
 }
 \description{
 This function allows the visualization of the bias-corrected values (i.e.

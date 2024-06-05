@@ -7,7 +7,7 @@
 agreement1(object)
 }
 \arguments{
-\item{object}{list returned by \link{measure_compare} function}
+\item{object}{list returned by \link{measure_compare} function.}
 }
 \description{
 Plot the agreement and percentage agreement after recalibration along with

@@ -7,7 +7,7 @@
 bias_plot(object)
 }
 \arguments{
-\item{object}{list returned by \link{measure_compare} function}
+\item{object}{list returned by \link{measure_compare} function.}
 }
 \description{
 Plot the bias and measurements from the two methods along with their

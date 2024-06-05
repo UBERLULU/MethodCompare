@@ -7,7 +7,7 @@
 sqrt_mse(object)
 }
 \arguments{
-\item{object}{list returned by \link{measure_compare} function}
+\item{object}{list returned by \link{measure_compare} function.}
 }
 \description{
 Plot the square root of the mean squared errors from the two methods along

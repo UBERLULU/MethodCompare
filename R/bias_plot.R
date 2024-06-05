@@ -64,8 +64,8 @@ bias_plot <- function(object) {
        col = "red", type = "l", lty = 1, lwd = 2)
   abline(h = 0, col = "black", lwd = 1)
   ## Add the right y axis and label
-  mtext("Bias", side = 4, col = "black", line = 2.5)
-  axis(4, col = "black", col.axis = "black", las = 1)
+  mtext("Bias", side = 4, col = "red", line = 2.5)
+  axis(4, col = "red", col.axis = "red", las = 1)
   ### Draw the x axis and add the label
   axis(1)
   mtext("BLUP of x", side = 1, col = "black", line = 2)

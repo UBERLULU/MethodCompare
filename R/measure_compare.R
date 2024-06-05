@@ -28,7 +28,7 @@
 #' * `sim_params`: estimated model coefficients used afterward
 #' * `nb_simul`: the number of simulations used for confidence bands 
 #'  simulations
-#' * `bias`: differential and proportional bias
+#' * `bias`: differential and proportional biases
 #' 
 #' @export
 #'

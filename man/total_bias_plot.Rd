@@ -7,7 +7,7 @@
 total_bias_plot(object)
 }
 \arguments{
-\item{object}{list returned by \link{measure_compare} function}
+\item{object}{list returned by \link{measure_compare} function.}
 }
 \description{
 Plot total bias along with 95\% confidence bands

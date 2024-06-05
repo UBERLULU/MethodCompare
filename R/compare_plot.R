@@ -46,7 +46,7 @@ compare_plot <- function(object) {
   abline(models[[4]]$coefficients, lwd = 2, lty = 1, col = "blue")
   abline(models[[6]]$coefficients, lwd = 2, lty = 2, col = "red")
   legend("topleft", legend = c("Reference method (y2)", "New method (y1)",
-                               "New method(corrected)"),
+                               "New method (corrected)"),
          pch = c(1, 19, 19), lty = c(1, 1, 2), col = c("black", "blue", "red"),
          y.intersp = 0.7, yjust = 0.2, bty = "n", cex = 0.8)
 }
