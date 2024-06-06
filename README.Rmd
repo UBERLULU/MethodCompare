@@ -1,0 +1,48 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# MethodCompare
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of MethodCompare is to is to implement the methodology reported in the two papers : "Effective plots to assess bias and precision in method comparison studies" (P. Taffé) published in *Statistical Methods in Medical Research* (2018; 27:1650-1660), "Assessing bias, precision, and agreement in method comparison studies" (P. Taffé) published in *Statistical Methods in Medical Research* (2020; 29:778-796). The package will generate graphs (the bias, total bias, precision, comparison, agreement without and after recalibration, percentage of agreement without and after recalibration, mean squared error and square root mean squared error plots), compute the differential and proportional biases with their respective 95% CIs.
+
+## Installation
+
+You can install the development version of MethodCompare from [GitHub](https://github.com/UBERLULU/MethodCompare) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("UBERLULU/MethodCompare")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(MethodCompare)
+## basic example code
+### Load the data
+data(data1)
+### Analysis
+measure_model <- measure_compare(data1)
+```
+
+```{r bias_plot, echo = FALSE}
+### Display bias plot
+bias_plot(measure_model)
+```
