@@ -28,7 +28,7 @@ pct_agreement1 <- function(object) {
   sig_d_corr <- sqrt(data_agg$sig2_res_y1_corr + data_agg$sig2_res_y2)
   sig2_d_corr <- sig_d_corr^2
   
-  data_agg$pct_agreement_corr <- 1 - (qnorm(0.975) * sig_d_corr) /
+  data_agg$pct_agreement_corr <- 1 - (stats::qnorm(0.975) * sig_d_corr) /
     abs(data_agg$fitted_y2)
   
   # Simulation parameters
@@ -45,7 +45,7 @@ pct_agreement1 <- function(object) {
     v_blup_x_j <- min(data_old[data_old$id == j, ]$v_blup)
     sd_blup_x_j <- sqrt(v_blup_x_j)
     
-    blup_x_j <- rnorm(10000, mean = m_blup_x_j,
+    blup_x_j <- stats::rnorm(10000, mean = m_blup_x_j,
                       sd = sd_blup_x_j)
     
     thetas1_corr_j <- rockchalk::mvrnorm(10000, mu = m1, Sigma = v1)
@@ -56,7 +56,7 @@ pct_agreement1 <- function(object) {
                            (pi / 2) * (thetas2_j[, 1] + thetas2_j[, 2] *
                                          blup_x_j)^2)
     
-    pct_agreement_corr_j <- 1 - (qnorm(0.975) * sig_d_corr_j) / abs(blup_x_j)
+    pct_agreement_corr_j <- 1 - (stats::qnorm(0.975) * sig_d_corr_j) / abs(blup_x_j)
     
     data_agg$v_pct_agreement_corr[data_agg$id == j] <- var(
       pct_agreement_corr_j
@@ -64,7 +64,7 @@ pct_agreement1 <- function(object) {
   }
   
   for (j in 1:nb_simul) {
-    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+    blup_x_j <- stats::rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
                       sd = data_agg$sd_blup)
     
     thetas1_corr_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m1, Sigma = v1)
@@ -75,7 +75,7 @@ pct_agreement1 <- function(object) {
                            (pi / 2) * (thetas2_j[, 1] + thetas2_j[, 2] *
                                          blup_x_j)^2)
     
-    pct_agreement_corr_j <- 1 - (qnorm(0.975) * sig_d_corr_j) / abs(blup_x_j)
+    pct_agreement_corr_j <- 1 - (stats::qnorm(0.975) * sig_d_corr_j) / abs(blup_x_j)
     
     d_j <- abs(pct_agreement_corr_j - data_agg$pct_agreement_corr) /
       sqrt(data_agg$v_pct_agreement_corr)
@@ -84,7 +84,7 @@ pct_agreement1 <- function(object) {
     sim_max_d[[j]] <- max_d_j
   }
   
-  crit_value9 <- quantile(unlist(sim_max_d), c(0.95))
+  crit_value9 <- stats::quantile(unlist(sim_max_d), c(0.95))
   
   data_agg$pct_agreement_corr_lo <- data_agg$pct_agreement_corr -
     crit_value9 * sqrt(data_agg$v_pct_agreement_corr)
@@ -103,7 +103,7 @@ pct_agreement1 <- function(object) {
   data_agg$pct_agreement_c_lo_fit <- predict(frac_poly_pct_agreement_c_lo)
   data_agg$pct_agreement_c_up_fit <- predict(frac_poly_pct_agreement_c_up)
   
-  # Compute min and max values for y-axis
+  # Compute min and max values for y-graphics::axis
   min_y <- min(data_agg$pct_agreement_c_lo_fit, data_agg$pct_agreement_c_up_fit,
                data_agg$pct_agreement_corr, na.rm = TRUE)
   max_y <- max(data_agg$pct_agreement_c_lo_fit, data_agg$pct_agreement_c_up_fit,
@@ -115,34 +115,34 @@ pct_agreement1 <- function(object) {
   # Order data for plot
   data_agg <- data_agg[order(data_agg$y2_hat), ]
   
-  par(mar = c(3.5, 3.5, 3, 4) + 0.1)
+  graphics::par(mar = c(3.5, 3.5, 3, 4) + 0.1)
   # Plot the percentage agreement after recalibration
   plot(data_agg$y2_hat, data_agg$pct_agreement_corr, xlab = "",
        ylab = "", axes = FALSE, col = "blue",
        ylim = c(max(min_y, 0), min(max_y, 1)), type = "l")
-  title(main = "Percentage agreement plot", cex.main = 0.9)
+  graphics::title(main = "Percentage agreement plot", cex.main = 0.9)
   
   # Add the subtitle
   subtitle <- "(after recalibration)"
-  mtext(subtitle, side = 3, cex = 0.8)
+  graphics::mtext(subtitle, side = 3, cex = 0.8)
   
   # 95% confidence bands
-  points(data_agg$y2_hat, data_agg$pct_agreement_c_lo_fit, col = "blue",
+  graphics::points(data_agg$y2_hat, data_agg$pct_agreement_c_lo_fit, col = "blue",
          type = "l", lty = 2)
-  points(data_agg$y2_hat, data_agg$pct_agreement_c_up_fit, col = "blue",
+  graphics::points(data_agg$y2_hat, data_agg$pct_agreement_c_up_fit, col = "blue",
          type = "l", lty = 2)
   
-  # y-axis
-  axis(2, col = "black", las = 1)
-  mtext("Percentage agreement", side = 2, line = 2)
-  box(col = "black")
+  # y-graphics::axis
+  graphics::axis(2, col = "black", las = 1)
+  graphics::mtext("Percentage agreement", side = 2, line = 2)
+  graphics::box(col = "black")
   
-  # x-axis
-  axis(1)
-  mtext("BLUP of x", side = 1, col = "black", line = 2)
+  # x-graphics::axis
+  graphics::axis(1)
+  graphics::mtext("BLUP of x", side = 1, col = "black", line = 2)
   
   # Legend
-  legend("top", legend = c("% agreement", "95% CB"),
+  graphics::legend("top", legend = c("% agreement", "95% CB"),
          pch = c(1, 19), col = c("blue", "blue"),
          pt.cex = c(0, 0), y.intersp = 0.7, yjust = 0.2, lty = c(1, 2),
          bty = "n", cex = 0.8)

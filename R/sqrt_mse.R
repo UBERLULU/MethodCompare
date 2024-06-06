@@ -48,7 +48,7 @@ sqrt_mse <- function(object) {
   sim_max_d <- vector(mode = "list", length = nb_simul)
   
   for (j in 1:nb_simul) {
-    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+    blup_x_j <- stats::rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
                       sd = data_agg$sd_blup)
     
     thetas1_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m1, Sigma = v1)
@@ -85,7 +85,7 @@ sqrt_mse <- function(object) {
     sim_max_d[[j]] <- max_d_j
   }
   
-  crit_value12 <- quantile(unlist(sim_max_d), c(0.95))
+  crit_value12 <- stats::quantile(unlist(sim_max_d), c(0.95))
   
   data_agg$sqrt_mse1_lo <- data_agg$sqrt_mse1 -
     crit_value12 * se_sqrt_mse1
@@ -113,7 +113,7 @@ sqrt_mse <- function(object) {
   sim_max_d <- vector(mode = "list", length = nb_simul)
   
   for (j in 1:nb_simul) {
-    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+    blup_x_j <- stats::rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
                       sd = data_agg$sd_blup)
     
     thetas2_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m2, Sigma = v2)
@@ -141,7 +141,7 @@ sqrt_mse <- function(object) {
     sim_max_d[[j]] <- max_d_j
   }
   
-  crit_value13 <- quantile(unlist(sim_max_d), c(0.95))
+  crit_value13 <- stats::quantile(unlist(sim_max_d), c(0.95))
   
   data_agg$sqrt_mse2_lo <- data_agg$sqrt_mse2 -
     crit_value13 * se_sqrt_mse2
@@ -156,7 +156,7 @@ sqrt_mse <- function(object) {
   data_agg$sqrt_mse2_lo_fit <- predict(frac_poly_sqrt_mse2_lo)
   data_agg$sqrt_mse2_up_fit <- predict(frac_poly_sqrt_mse2_up)
   
-  # Compute min and max values for y-axis
+  # Compute min and max values for y-graphics::axis
   min_y <- min(data_agg$sqrt_mse1_lo_fit, data_agg$sqrt_mse1_up_fit,
                data_agg$sqrt_mse2_lo_fit, data_agg$sqrt_mse2_up_fit,
                na.rm = TRUE)
@@ -171,39 +171,39 @@ sqrt_mse <- function(object) {
   # Order data for plot
   data_agg <- data_agg[order(data_agg$y2_hat), ]
   
-  par(mar = c(3.5, 3.5, 3, 4) + 0.1)
+  graphics::par(mar = c(3.5, 3.5, 3, 4) + 0.1)
   # Plot the MSE
   plot(data_agg$y2_hat, data_agg$sqrt_mse1, xlab = "", ylab = "",
        axes = FALSE, col = "red", type = "l", lwd = 2, ylim = c(min_y, max_y))
-  title(main = "sqrt(MSE) plot", cex.main = 0.9)
+  graphics::title(main = "sqrt(MSE) plot", cex.main = 0.9)
   
   # Confidence bands of MSE1
-  points(data_agg$y2_hat, data_agg$sqrt_mse1_lo_fit, col = "red",
+  graphics::points(data_agg$y2_hat, data_agg$sqrt_mse1_lo_fit, col = "red",
          type = "l", lty = 2)
-  points(data_agg$y2_hat, data_agg$sqrt_mse1_up_fit, col = "red",
+  graphics::points(data_agg$y2_hat, data_agg$sqrt_mse1_up_fit, col = "red",
          type = "l", lty = 2)
   
   # MSE2
-  points(data_agg$y2_hat, data_agg$sqrt_mse2, col = "black",
+  graphics::points(data_agg$y2_hat, data_agg$sqrt_mse2, col = "black",
          type = "l", lwd = 2)
   
   # Confidence bands of MSE2
-  points(data_agg$y2_hat, data_agg$sqrt_mse2_lo_fit, col = "black",
+  graphics::points(data_agg$y2_hat, data_agg$sqrt_mse2_lo_fit, col = "black",
          type = "l", lty = 2)
-  points(data_agg$y2_hat, data_agg$sqrt_mse2_up_fit, col = "black",
+  graphics::points(data_agg$y2_hat, data_agg$sqrt_mse2_up_fit, col = "black",
          type = "l", lty = 2)
   
-  # y-axis
-  axis(2, col = "black", las = 1)
-  mtext("sqrt(MSE)", side = 2, line = 2)
-  box(col = "black")
+  # y-graphics::axis
+  graphics::axis(2, col = "black", las = 1)
+  graphics::mtext("sqrt(MSE)", side = 2, line = 2)
+  graphics::box(col = "black")
   
-  # x-axis
-  axis(1)
-  mtext("BLUP of x", side = 1, col = "black", line = 2)
+  # x-graphics::axis
+  graphics::axis(1)
+  graphics::mtext("BLUP of x", side = 1, col = "black", line = 2)
   
   # Legend
-  legend("top", legend = c("Reference standard", "New method"), pch = c(1, 19),
+  graphics::legend("top", legend = c("Reference standard", "New method"), pch = c(1, 19),
          col = c("black", "red"), pt.cex = c(0, 0), y.intersp = 0.7,
          yjust = 0.2, lty = c(1, 1), bty = "n", cex = 0.8)
   

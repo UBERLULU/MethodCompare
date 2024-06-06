@@ -36,7 +36,7 @@ individual
 \item \code{sim_params}: estimated model coefficients used afterward
 \item \code{nb_simul}: the number of simulations used for confidence bands
 simulations
-\item \code{bias}: differential and proportional bias
+\item \code{bias}: differential and proportional biases
 }
 }
 \description{

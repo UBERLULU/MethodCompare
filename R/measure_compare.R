@@ -58,7 +58,7 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
   
   # Model 1: Mixed model for BLUP estimate of x
   model_1 <- lme4::lmer(y2 ~ 1 + (1 | id), data = data_y2,
-                        na.action = na.exclude)
+                        na.action = stats::na.exclude)
   data_y2$y2_hat <- fitted(model_1)
   
   # Computation of variances of blup
@@ -92,7 +92,7 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
                                  se_type = "stata", clusters = id)
   
   # Model coefficients & variance-covariance matrix
-  model_3_coef <- coef(model_3)
+  model_3_coef <- stats::coef(model_3)
   theta2_0e <- model_3_coef[1]
   theta2_1e <- model_3_coef[2]
   model_3_cov <- vcov(model_3)
@@ -120,7 +120,7 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
   # Model 4: Regression of y1 based on BLUP of x
   model_4 <- estimatr::lm_robust(y1 ~ y2_hat, data = data_y1, se_type = "stata",
                                  clusters = id)
-  model_4_coef <- coef(model_4)
+  model_4_coef <- stats::coef(model_4)
   
   # Differential and proportional bias of new method
   bias <- cbind(model_4$coefficients, confint(model_4))
@@ -147,7 +147,7 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
                                  se_type = "stata", clusters = id)
   
   # Model coefficients & variance-covariance matrix
-  model_5_coef <- coef(model_5)
+  model_5_coef <- stats::coef(model_5)
   theta1_0e <- model_5_coef[1]
   theta1_1e <- model_5_coef[2]
   model_5_cov <- vcov(model_5)
@@ -187,7 +187,7 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
   # Model 7: Variance function estimation for corrected y1
   model_7 <- estimatr::lm_robust(res_y1_corr_abs ~ y2_hat, data = data_y1,
                                  se_type = "stata", clusters = id)
-  model_7_coef <- coef(model_7)
+  model_7_coef <- stats::coef(model_7)
   
   # Model coefficients & variance-covariance matrix
   theta1_0_corre <- model_7_coef[1]

@@ -31,7 +31,7 @@ total_bias_plot <- function(object) {
   sim_max_d <- vector(mode = "list", length = nb_simul)
   
   for (j in 1:nb_simul) {
-    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+    blup_x_j <- stats::rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
                       sd = data_agg$sd_blup)
     biases_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m1, Sigma = v1)
     
@@ -45,7 +45,7 @@ total_bias_plot <- function(object) {
     sim_max_d[[j]] <- max_d_j
   }
   
-  crit_value2 <- quantile(unlist(sim_max_d), c(0.95))
+  crit_value2 <- stats::quantile(unlist(sim_max_d), c(0.95))
   
   data_agg$bias_y1_lo <- data_agg$bias_y1 -
     crit_value2 * data_agg$se_bias_y1
@@ -74,37 +74,37 @@ total_bias_plot <- function(object) {
   # Order data for plot
   data_agg <- data_agg[order(data_agg$y2_hat), ]
   
-  par(mar = c(3.5, 3.5, 3, 4) + 0.1)
+  graphics::par(mar = c(3.5, 3.5, 3, 4) + 0.1)
   # Plot the bias
   plot(data_agg$y2_hat, data_agg$bias, xlab = "", ylab = "", axes = FALSE,
        col = "red", type = "l", lwd = 2, ylim = c(min_bias, max_bias))
-  title(main = "Total bias plot", cex.main = 0.9)
+  graphics::title(main = "Total bias plot", cex.main = 0.9)
   
   # Add the subtitle
   subtitle <- paste("Differential bias: ", round(bias[1, 1], 3), "; ",
                     "Proportional bias: ", round(bias[2, 1], 3), sep = "")
-  mtext(subtitle, side = 3, cex = 0.8)
+  graphics::mtext(subtitle, side = 3, cex = 0.8)
   
   # Confidence bands
-  points(data_agg$y2_hat, data_agg$bias_y1_lo_fit, col = "red",
+  graphics::points(data_agg$y2_hat, data_agg$bias_y1_lo_fit, col = "red",
          type = "l", lty = 2)
-  points(data_agg$y2_hat, data_agg$bias_y1_up_fit, col = "red",
+  graphics::points(data_agg$y2_hat, data_agg$bias_y1_up_fit, col = "red",
          type = "l", lty = 2)
   
   # Zero horizontal line
-  abline(h = 0, col = "wheat2")
+  graphics::abline(h = 0, col = "wheat2")
   
-  # y-axis
-  axis(2, col = "black", las = 1)
-  mtext("Bias", side = 2, line = 2)
-  box(col = "black")
+  # y-graphics::axis
+  graphics::axis(2, col = "black", las = 1)
+  graphics::mtext("Bias", side = 2, line = 2)
+  graphics::box(col = "black")
   
-  # x-axis
-  axis(1)
-  mtext("BLUP of x", side = 1, col = "black", line = 2)
+  # x-graphics::axis
+  graphics::axis(1)
+  graphics::mtext("BLUP of x", side = 1, col = "black", line = 2)
   
   # Legend
-  legend("top", legend = c("Bias", "95%CB"), pch = c(1, 19),
+  graphics::legend("top", legend = c("Bias", "95%CB"), pch = c(1, 19),
          col = c("red", "red"), pt.cex = c(0, 0), y.intersp = 0.7, yjust = 0.2,
          lty = c(1, 2), bty = "n", cex = 0.8)
 }

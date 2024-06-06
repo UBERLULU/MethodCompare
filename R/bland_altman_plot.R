@@ -40,7 +40,7 @@ bland_altman_plot <- function(data, new = "y1", ref = "y2", id = "id",
   data_sub$diff_m <- data_sub$y1 - data_sub$y2
   data_sub$avg_m <- (data_sub$y1 + data_sub$y2) /  2
   #### Calculate the harmonic means
-  y1 <- as.numeric(data.frame(table(na.omit(data_sub)$id))$Freq)
+  y1 <- as.numeric(data.frame(table(stats::na.omit(data_sub)$id))$Freq)
   y2 <- as.numeric(data.frame(table(data_sub$id))$Freq)
   coef_1 <- 1 / mean(1 / y1)
   coef_1 <- 1 - 1 / coef_1
@@ -48,15 +48,15 @@ bland_altman_plot <- function(data, new = "y1", ref = "y2", id = "id",
   coef_2 <- 1 - 1 / coef_2
   #### With-object variance
   model_y2 <- lme4::lmer(y2 ~ 1 + (1 | id), data = data_sub,
-                         na.action = na.exclude)
+                         na.action = stats::na.exclude)
   vif <- sigma(model_y2)^2 * coef_2
   if (max(y1) > 1) {
     model_y1 <- lme4::lmer(y1 ~ 1 + (1 | id), data = data_sub,
-                           na.action = na.exclude)
+                           na.action = stats::na.exclude)
     vif <- sigma(model_y2)^2 * coef_2 + sigma(model_y1)^2 * coef_1
   }
   ####    model on difference based on average
-  data_sub_1 <- na.omit(data_sub)
+  data_sub_1 <- stats::na.omit(data_sub)
   model_1 <- lm(diff_m ~ avg_m, data = data_sub_1)
   data_sub_1$fitted <- fitted(model_1)
   data_sub_1$resid_fitted <- residuals(model_1)
@@ -84,23 +84,23 @@ bland_altman_plot <- function(data, new = "y1", ref = "y2", id = "id",
   max <- max(abs(data_sub$diff_m), na.rm = TRUE)
   max <- max + max * 0.2
   ##### final plot
-  par(mar = c(3.5, 3.5, 2, 2) + 0.1)
+  graphics::par(mar = c(3.5, 3.5, 2, 2) + 0.1)
   plot(data_sub$avg_m, data_sub$diff_m, xlab = "", ylab = "", axes = FALSE,
        col = "grey", ylim = c(-max, max))
-  title(main = "Extended Bland & Altman LoA plot",
+  graphics::title(main = "Extended Bland & Altman LoA plot",
         cex.main = 0.9)
-  ### Add the y axis
-  axis(2, col = "black", las = 1)
-  mtext("Difference of y1 and y2 (y1-y2)", side = 2, line = 2)
-  box(col = "black")
-  ### Add the x axis
-  axis(1)
-  mtext("Mean of y1 and y2 [(y1+y2)/2]", side = 1, col = "black", line = 2)
-  abline(model_1$coefficients, col = "blue", lwd = 2)
-  abline(h = 0, col = "black", lwd = 2)
-  abline(model_3$coefficients, col = "blue", lty = 2, lwd = 2)
-  abline(model_4$coefficients, col = "blue", lty = 2, lwd = 2)
-  legend("topleft", legend = c("Regression line", "95% LoA"),
+  ### Add the y graphics::axis
+  graphics::axis(2, col = "black", las = 1)
+  graphics::mtext("Difference of y1 and y2 (y1-y2)", side = 2, line = 2)
+  graphics::box(col = "black")
+  ### Add the x graphics::axis
+  graphics::axis(1)
+  graphics::mtext("Mean of y1 and y2 [(y1+y2)/2]", side = 1, col = "black", line = 2)
+  graphics::abline(model_1$coefficients, col = "blue", lwd = 2)
+  graphics::abline(h = 0, col = "black", lwd = 2)
+  graphics::abline(model_3$coefficients, col = "blue", lty = 2, lwd = 2)
+  graphics::abline(model_4$coefficients, col = "blue", lty = 2, lwd = 2)
+  graphics::legend("topleft", legend = c("Regression line", "95% LoA"),
          col = c("blue", "blue"), y.intersp = 0.7, yjust = 0.2, lty = c(1, 2),
          bty = "n", cex = 0.8)
 }
