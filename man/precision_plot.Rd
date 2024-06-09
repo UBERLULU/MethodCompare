@@ -4,10 +4,13 @@
 \alias{precision_plot}
 \title{Plot the precision of the methods}
 \usage{
-precision_plot(object)
+precision_plot(object, object2 = NULL)
 }
 \arguments{
 \item{object}{list returned by \link{measure_compare} function.}
+
+\item{object2}{(optional) returned by \link{measure_compare} function.
+If provided, will plot a second total bias estimate.}
 }
 \description{
 Plot the precision of the two methods along with their 95\% confidence bands

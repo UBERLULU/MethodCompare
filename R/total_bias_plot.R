@@ -3,7 +3,7 @@
 #' Plot total bias along with 95% confidence bands
 #'
 #' @param object list returned by \link{measure_compare} function.
-#' @param object (optional) returned by \link{measure_compare} function. 
+#' @param object2 (optional) returned by \link{measure_compare} function. 
 #' If provided, will plot a second total bias estimate.
 #' 
 #' @export
