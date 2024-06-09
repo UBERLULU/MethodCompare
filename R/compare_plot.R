@@ -4,7 +4,7 @@
 #' This function allows the visualization of the bias-corrected values (i.e.
 #' recalibrated values, variable y1_corr) of the new measurement method.
 #'
-#' @inheritParams total_bias_plot
+#' @param object list returned by \link{measure_compare} function.
 #' 
 #' @export
 #'

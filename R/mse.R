@@ -3,7 +3,7 @@
 #' Plot the mean squared errors from the two methods along with
 #' 95% confidence bands.
 #'
-#' @inheritParams total_bias_plot
+#' @inheritParams compare_plot
 #' 
 #' @export
 #'

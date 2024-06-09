@@ -3,7 +3,7 @@
 #' Plot the bias and measurements from the two methods along with their 
 #' regression lines.
 #'
-#' @inheritParams total_bias_plot
+#' @inheritParams compare_plot
 #' 
 #' @export
 #'

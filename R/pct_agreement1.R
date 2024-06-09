@@ -3,7 +3,7 @@
 #' Plot the percentage agreement after recalibration along with
 #' 95% confidence bands.
 #'
-#' @inheritParams total_bias_plot
+#' @inheritParams compare_plot
 #' 
 #' @export
 #'

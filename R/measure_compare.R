@@ -50,6 +50,10 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
   colnames(data_sub) <- c("id", "y1", "y2")
   data_sub$id <- factor(as.integer(data_sub$id))
   
+  # Test if methods are equal and stop if they are 
+  are_new_ref_equal <- identical(data_sub$y1, data_sub$y2)
+  if(are_new_ref_equal) stop('Methods measurements are the same')
+  
   # Drop rows where both y1 and y2 are missing
   data_sub <- data_sub[!(is.na(data_sub$y1) & is.na(data_sub$y2)), ]
   
