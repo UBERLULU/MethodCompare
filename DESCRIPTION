@@ -6,7 +6,8 @@ Authors@R: c(
     role = c("aut", "cre")),
     person("Mingkai", "Peng", role = c("aut")),
     person("Patrick", "Taffé", email = "patrick.taffe@unisante.ch",
-    role = c("aut")))
+    role = c("aut")),
+    person("Tyler Williamson", role = c("aut")))
 Description: Evaluate bias and precision in method comparison 
     studies. One provides measurements for each method and it takes care of 
     the estimates. Multiple plots to evaluate bias, precision and compare

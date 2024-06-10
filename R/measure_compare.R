@@ -1,22 +1,37 @@
-#' Process data and estimate models for method comparison
+#' Estimation of the amount of bias of the new measurement method relative to
+#' the reference method
 #' 
-#' `measure_compare()` implements the new estimation procedure to asses the 
-#' agreement between the two measurement methods.
+#' `measure_compare()` implements the methodology reported in the paper:
+#'  Taffé P. Effective plots to assess bias and precision in method comparison
+#'  studies. Stat Methods Med Res 2018;27:1650-1660. Other relevant references:
+#'  Taffé P, Peng M, Stagg V, Williamson T. Biasplot: A package to effective
+#'  plots to assess bias and precision in method comparison studies. 
+#'  Stata J 2017;17:208-221. Taffé P, Peng M, Stagg V, Williamson T.
+#'  MethodCompare: An R package to assess bias and precision in method 
+#'  comparison studies. Stat Methods Med Res 2019;28:2557-2565. 
+#'  Taffé P, Halfon P, Halfon M. A new statistical methodology to assess bias
+#'  and precision overcomes the defects of the Bland & Altman method.
+#'  J Clin Epidemiol 2020;124:1-7. Taffé P. Assessing bias, precision, and
+#'  agreement in method comparison studies. Stat Methods Med Res 2020;29:778-796. 
+#'  Taffé P. When can the Bland-Altman limits of agreement method be used and
+#'  when it should not be used. J Clin Epidemiol 2021; 137:176-181.
 #' 
 #' Details of the function
 #'
-#' @param data a required data frame containing at least three columns: the
-#' measurements for the two methods and ids.
+#' @param data a required data frame containing the identification number of the 
+#' subject (id), the measurement values from the new measurement method (y1) and
+#' those from the reference method.
 #' @param new an optional string. The column name containing the measurements of the new 
-#' method.
+#' measurement method.
 #' @param ref an optional string. The column name containing the measurements of the 
-#' reference method (at least two measurements per individual).
-#' @param id an optional string. The column name containing the ids of individuals.
+#' reference method (at least two measurements per subject).
+#' @param id an optional string. The column name containing the subject 
+#' identification numbers.
 #' @param nb_simul an optional number. The number of simulations used for confidence bands
 #' simulations.
 #'
-#' @return A list containing
-#' * `models`: a list of models
+#' @return The function returns a list with the following items:
+#' * `models`: a list of models fitted in estimation procedure
 #' * `sub`: the original data frame containing with renamed columns and 
 #'  additional computed data
 #' * `ref`: a data frame for the reference method and its related estimates
@@ -28,7 +43,8 @@
 #' * `sim_params`: estimated model coefficients used afterward
 #' * `nb_simul`: the number of simulations used for confidence bands 
 #'  simulations
-#' * `bias`: differential and proportional biases
+#' * `bias`: differential and proportional biases for new method and the
+#' associated 95 percent confidence intervals
 #' 
 #' @export
 #'

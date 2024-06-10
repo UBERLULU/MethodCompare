@@ -13,7 +13,11 @@ precision_plot(object, object2 = NULL)
 If provided, will plot a second total bias estimate.}
 }
 \description{
-Plot the precision of the two methods along with their 95\% confidence bands
+This plot allows the visual comparison of the precision (i.e. standard
+deviation) of the new measurement method with the reference standard by
+creating a scatter plot of the estimated standard deviations, along with
+their 95\% confidence bands, against the best
+linear prediction (BLUP) of the true latent trait x.
 }
 \examples{
 ### Load the data

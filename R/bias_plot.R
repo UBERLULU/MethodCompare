@@ -1,7 +1,11 @@
 #' Plot the bias and measurements
 #' 
-#' Plot the bias and measurements from the two methods along with their 
-#' regression lines.
+#' This function draws the "bias plot", which is used to visually assess the
+#' bias of the new method relative to the reference method. It is obtained by
+#' graphing a scatter plot of y1 (new method) and y2 (reference method) versus
+#' the BLUP of y2 along with the two regression lines. The function adds a
+#' second scale on the right axis, showing the relationship between the estimated
+#' amount of bias and BLUP of y2.
 #'
 #' @inheritParams compare_plot
 #' 
