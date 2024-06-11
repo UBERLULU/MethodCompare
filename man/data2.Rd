@@ -15,7 +15,7 @@ data2
 }
 \description{
 In the simulated dataset 2, each subject has 10 to 20 measurement values
-from the new method and 20 to 100 measurement values from the reference method.
+from the new method and 10 to 20 measurement values from the reference method.
 Compared to the reference method, the new method has differential bias of 4
 and proportional bias of 0.8. Variance of the new method is smaller than that
 for the reference method.
