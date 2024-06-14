@@ -1,3 +1,5 @@
+#' @importFrom stats rnorm
+#' @importFrom stats quantile
 total_bias_simulation <- function(object) {
   # Extract the objects from the output
   bias <- object$bias
@@ -14,7 +16,7 @@ total_bias_simulation <- function(object) {
   sim_max_d <- vector(mode = "list", length = nb_simul)
   
   for (j in 1:nb_simul) {
-    blup_x_j <- stats::rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
                              sd = data_agg$sd_blup)
     biases_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m1, Sigma = v1)
     
@@ -28,7 +30,7 @@ total_bias_simulation <- function(object) {
     sim_max_d[[j]] <- max_d_j
   }
   
-  crit_value2 <- stats::quantile(unlist(sim_max_d), c(0.95))
+  crit_value2 <- quantile(unlist(sim_max_d), c(0.95))
   
   data_agg$bias_y1_lo <- data_agg$bias_y1 -
     crit_value2 * data_agg$se_bias_y1

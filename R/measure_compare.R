@@ -15,12 +15,10 @@
 #'  agreement in method comparison studies. Stat Methods Med Res 2020;29:778-796. 
 #'  Taffé P. When can the Bland-Altman limits of agreement method be used and
 #'  when it should not be used. J Clin Epidemiol 2021; 137:176-181.
-#' 
-#' Details of the function
 #'
 #' @param data a required data frame containing the identification number of the 
 #' subject (id), the measurement values from the new measurement method (y1) and
-#' those from the reference method.
+#' those from the reference method (y2).
 #' @param new an optional string. The column name containing the measurements of the new 
 #' measurement method.
 #' @param ref an optional string. The column name containing the measurements of the 
@@ -35,7 +33,7 @@
 #' * `sub`: the original data frame containing with renamed columns and 
 #'  additional computed data
 #' * `ref`: a data frame for the reference method and its related estimates
-#' * `y1_y2`: subset data frame of sub containing measurements for both 
+#' * `y1_y2`: a subset data frame of sub containing measurements for both 
 #'  methods, that is `y1` and `y2` columns are not NAs
 #' * `new`: a data frame for the new method and its related estimates
 #' * `agg`: a data frame made from ref and new containing a row per 
@@ -45,6 +43,12 @@
 #'  simulations
 #' * `bias`: differential and proportional biases for new method and the
 #' associated 95 percent confidence intervals
+#' 
+#' @importFrom stats fitted
+#' @importFrom stats vcov
+#' @importFrom stats aggregate
+#' @importFrom stats confint
+#' @importFrom stats lm
 #' 
 #' @export
 #'

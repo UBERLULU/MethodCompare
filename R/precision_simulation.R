@@ -1,3 +1,5 @@
+#' @importFrom stats rnorm
+#' @importFrom stats quantile
 precision_simulation <- function(object) {
   # Extract the objects from the output
   data_agg <- object$agg
@@ -15,7 +17,7 @@ precision_simulation <- function(object) {
   sim_max_d <- vector(mode = "list", length = nb_simul)
   
   for (j in 1:nb_simul) {
-    blup_x_j <- stats::rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
                              sd = data_agg$sd_blup)
     thetas_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m2, Sigma = v2)
     
@@ -31,7 +33,7 @@ precision_simulation <- function(object) {
     sim_max_d[[j]] <- max_d_j
   }
   
-  crit_value1 <- stats::quantile(unlist(sim_max_d), c(0.95))
+  crit_value1 <- quantile(unlist(sim_max_d), c(0.95))
   
   data_agg$sig_e2_lo <- exp(data_agg$log_sig_res_y2 - crit_value1 *
                               data_agg$se_log_sig_res_y2)
@@ -56,7 +58,7 @@ precision_simulation <- function(object) {
   sim_max_d <- vector(mode = "list", length = nb_simul)
   
   for (j in 1:nb_simul) {
-    blup_x_j <- stats::rnorm(dim(data_agg)[1], mean = data_agg$y2_hat,
+    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$y2_hat,
                              sd = data_agg$sd_blup)
     thetas_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m1, Sigma = v1)
     
@@ -75,7 +77,7 @@ precision_simulation <- function(object) {
     sim_max_d[[j]] <- max_d_j
   }
   
-  crit_value3 <- stats::quantile(unlist(sim_max_d), c(0.95))
+  crit_value3 <- quantile(unlist(sim_max_d), c(0.95))
   
   data_agg$sig_e1_corr_lo <- exp(data_agg$log_sig_res_y1_corr -
                                    crit_value3 *
@@ -92,7 +94,7 @@ precision_simulation <- function(object) {
   data_agg$sig_e1_corr_lo_fit <- predict(frac_poly_sig_e1_corr_lo)
   data_agg$sig_e1_corr_up_fit <- predict(frac_poly_sig_e1_corr_up)
   
-  # Compute min and max values for y-graphics::axis
+  # Compute min and max values for y-axis
   min_y <- min(data_agg$sig_e2_lo_fit, data_agg$sig_e2_up_fit,
                data_agg$sig_e1_corr_lo_fit, data_agg$sig_e1_corr_up_fit,
                na.rm = TRUE)

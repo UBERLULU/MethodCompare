@@ -10,7 +10,7 @@ precision_plot(object, object2 = NULL)
 \item{object}{list returned by \link{measure_compare} function.}
 
 \item{object2}{(optional) returned by \link{measure_compare} function.
-If provided, will plot a second total bias estimate.}
+If provided, will plot a second precision estimate.}
 }
 \description{
 This plot allows the visual comparison of the precision (i.e. standard

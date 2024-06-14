@@ -9,10 +9,10 @@ var_blup <- function(data, model) {
   X <- lme4::getME(model, "X")
   D <- sig2_u * diag(length(unique(data$id)))
   R <- sig2_e * diag(nrow(Z))
-  invR <- chol2inv(chol(R))
+  invR <- Matrix::chol2inv(chol(R))
   V <- Z %*% D %*% Zt + R
   
-  invV <- chol2inv(chol(V))
+  invV <- Matrix::chol2inv(chol(V))
   res <- data$y2 - lme4::fixef(model) * X
   
   bi <- D %*% Zt %*% invV %*% res
@@ -24,17 +24,17 @@ var_blup <- function(data, model) {
     
     Vi <- Zi %*% D %*% Matrix::t(Zi) + R[data$id == i, data$id == i]
     
-    invVi <- chol2inv(chol(Vi))
+    invVi <- Matrix::chol2inv(chol(Vi))
     
     Xi <- as.matrix(X[data$id == i])
     
-    sumXWX <- sumXWX + t(Xi) %*% invVi %*% Xi
+    sumXWX <- sumXWX + Matrix::t(Xi) %*% invVi %*% Xi
   }
   
-  inv_sumXWX <- chol2inv(chol(sumXWX))
+  inv_sumXWX <- Matrix::chol2inv(Matrix::chol(sumXWX))
   
-  vbi <- D %*% Zt %*% (invV - invV %*% X %*% chol2inv(chol(sumXWX)) %*%
-                         t(X) %*% invV) %*% Z %*% D
+  vbi <- D %*% Zt %*% (invV - invV %*% X %*% Matrix::chol2inv(Matrix::chol(sumXWX)) %*%
+                         Matrix::t(X) %*% invV) %*% Z %*% D
   
   return(data.frame(id = unique(data$id), v_blup = Matrix::diag(D - vbi)))
 }

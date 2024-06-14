@@ -5,6 +5,9 @@
 #'
 #' @inheritParams compare_plot
 #' 
+#' @importFrom stats rnorm quantile
+#' @importFrom graphics title par points axis mtext box legend
+#' 
 #' @export
 #'
 #' @examples
@@ -44,7 +47,7 @@ mse <- function(object) {
   sim_max_d <- vector(mode = "list", length = nb_simul)
   
   for (j in 1:nb_simul) {
-    blup_x_j <- stats::rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
                       sd = data_agg$sd_blup)
     
     thetas1_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m1, Sigma = v1)
@@ -78,7 +81,7 @@ mse <- function(object) {
     sim_max_d[[j]] <- max_d_j
   }
   
-  crit_value10 <- stats::quantile(unlist(sim_max_d), c(0.95), na.rm = TRUE)
+  crit_value10 <- quantile(unlist(sim_max_d), c(0.95), na.rm = TRUE)
   
   data_agg$mse1_lo <- data_agg$mse1 - crit_value10 * se_mse1
   data_agg$mse1_up <- data_agg$mse1 + crit_value10 * se_mse1
@@ -99,7 +102,7 @@ mse <- function(object) {
   sim_max_d <- vector(mode = "list", length = nb_simul)
   
   for (j in 1:nb_simul) {
-    blup_x_j <- stats::rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
                       sd = data_agg$sd_blup)
     
     thetas2_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m2, Sigma = v2)
@@ -125,7 +128,7 @@ mse <- function(object) {
     sim_max_d[[j]] <- max_d_j
   }
   
-  crit_value11 <- stats::quantile(unlist(sim_max_d), c(0.95), na.rm = TRUE)
+  crit_value11 <- quantile(unlist(sim_max_d), c(0.95), na.rm = TRUE)
   
   data_agg$mse2_lo <- data_agg$mse2 - crit_value11 * se_mse2
   data_agg$mse2_up <- data_agg$mse2 + crit_value11 * se_mse2
@@ -136,7 +139,7 @@ mse <- function(object) {
   data_agg$mse2_lo_fit <- predict(frac_poly_mse2_lo)
   data_agg$mse2_up_fit <- predict(frac_poly_mse2_up)
   
-  # Compute min and max values for y-graphics::axis
+  # Compute min and max values for y-axis
   min_y <- min(data_agg$mse1_lo_fit, data_agg$mse1_up_fit, data_agg$mse2_lo_fit, data_agg$mse2_up_fit, na.rm = TRUE)
   max_y <- max(data_agg$mse1_lo_fit, data_agg$mse1_up_fit, data_agg$mse2_lo_fit, data_agg$mse2_up_fit, na.rm = TRUE)
   
@@ -147,39 +150,39 @@ mse <- function(object) {
   # Order data for plot
   data_agg <- data_agg[order(data_agg$y2_hat), ]
   
-  graphics::par(mar = c(3.5, 3.5, 3, 4) + 0.1)
+  par(mar = c(3.5, 3.5, 3, 4) + 0.1)
   # Plot the MSE
   plot(data_agg$y2_hat, data_agg$mse1, xlab = "", ylab = "",
        axes = FALSE, col = "red", type = "l", lwd = 2, ylim = c(min_y, max_y))
-  graphics::title(main = "MSE plot", cex.main = 0.9)
+  title(main = "MSE plot", cex.main = 0.9)
   
   # Confidence bands of MSE1
-  graphics::points(data_agg$y2_hat, data_agg$mse1_lo_fit, col = "red",
+  points(data_agg$y2_hat, data_agg$mse1_lo_fit, col = "red",
          type = "l", lty = 2)
-  graphics::points(data_agg$y2_hat, data_agg$mse1_up_fit, col = "red",
+  points(data_agg$y2_hat, data_agg$mse1_up_fit, col = "red",
          type = "l", lty = 2)
   
   # MSE2
-  graphics::points(data_agg$y2_hat, data_agg$mse2, col = "black",
+  points(data_agg$y2_hat, data_agg$mse2, col = "black",
          type = "l", lwd = 2)
   
   # Confidence bands of MSE2
-  graphics::points(data_agg$y2_hat, data_agg$mse2_lo_fit, col = "black",
+  points(data_agg$y2_hat, data_agg$mse2_lo_fit, col = "black",
          type = "l", lty = 2)
-  graphics::points(data_agg$y2_hat, data_agg$mse2_up_fit, col = "black",
+  points(data_agg$y2_hat, data_agg$mse2_up_fit, col = "black",
          type = "l", lty = 2)
   
-  # y-graphics::axis
-  graphics::axis(2, col = "black", las = 1)
-  graphics::mtext("MSE", side = 2, line = 2)
-  graphics::box(col = "black")
+  # y-axis
+  axis(2, col = "black", las = 1)
+  mtext("MSE", side = 2, line = 2)
+  box(col = "black")
   
-  # x-graphics::axis
-  graphics::axis(1)
-  graphics::mtext("BLUP of x", side = 1, col = "black", line = 2)
+  # x-axis
+  axis(1)
+  mtext("BLUP of x", side = 1, col = "black", line = 2)
   
   # Legend
-  graphics::legend("top", legend = c("Reference standard", "New method"), pch = c(1, 19),
+  legend("top", legend = c("Reference standard", "New method"), pch = c(1, 19),
          col = c("black", "red"), pt.cex = c(0, 0), y.intersp = 0.7,
          yjust = 0.2, lty = c(1, 1), bty = "n", cex = 0.8)
 }

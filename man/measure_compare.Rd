@@ -10,7 +10,7 @@ measure_compare(data, new = "y1", ref = "y2", id = "id", nb_simul = 1000)
 \arguments{
 \item{data}{a required data frame containing the identification number of the
 subject (id), the measurement values from the new measurement method (y1) and
-those from the reference method.}
+those from the reference method (y2).}
 
 \item{new}{an optional string. The column name containing the measurements of the new
 measurement method.}
@@ -31,7 +31,7 @@ The function returns a list with the following items:
 \item \code{sub}: the original data frame containing with renamed columns and
 additional computed data
 \item \code{ref}: a data frame for the reference method and its related estimates
-\item \code{y1_y2}: subset data frame of sub containing measurements for both
+\item \code{y1_y2}: a subset data frame of sub containing measurements for both
 methods, that is \code{y1} and \code{y2} columns are not NAs
 \item \code{new}: a data frame for the new method and its related estimates
 \item \code{agg}: a data frame made from ref and new containing a row per
@@ -58,9 +58,6 @@ J Clin Epidemiol 2020;124:1-7. Taffé P. Assessing bias, precision, and
 agreement in method comparison studies. Stat Methods Med Res 2020;29:778-796.
 Taffé P. When can the Bland-Altman limits of agreement method be used and
 when it should not be used. J Clin Epidemiol 2021; 137:176-181.
-}
-\details{
-Details of the function
 }
 \examples{
 ### Load the data

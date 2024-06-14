@@ -6,6 +6,8 @@
 #' @param object2 (optional) returned by \link{measure_compare} function. 
 #' If provided, will plot a second total bias estimate.
 #' 
+#' @importFrom graphics title par points axis mtext box legend
+#' 
 #' @export
 #'
 #' @examples
@@ -32,12 +34,12 @@ total_bias_plot <- function(object, object2 = NULL) {
     max_bias <- max(max_bias, object2_sim$max_bias)
   }
   
-  graphics::par(mar = c(3.5, 3.5, 3, 4) + 0.1)
+  par(mar = c(3.5, 3.5, 3, 4) + 0.1)
   # Plot the bias
   plot(object_sim$data_agg$y2_hat, object_sim$data_agg$bias, xlab = "", 
        ylab = "", axes = FALSE, col = "red", type = "l", lwd = 2, 
        ylim = c(min_bias, max_bias))
-  graphics::title(main = "Total bias plot", cex.main = 0.9)
+  title(main = "Total bias plot", cex.main = 0.9)
   
   if (two_objects) {
     points(object2_sim$data_agg$y2_hat, object2_sim$data_agg$bias, xlab = "", 
@@ -50,22 +52,22 @@ total_bias_plot <- function(object, object2 = NULL) {
                       round(object_sim$bias[1, 1], 3), "; ",
                       "Proportional bias: ", round(object_sim$bias[2, 1], 3),
                       sep = "")
-    graphics::mtext(subtitle, side = 3, cex = 0.8)
+    mtext(subtitle, side = 3, cex = 0.8)
   }
   
   # Confidence bands
-  graphics::points(object_sim$data_agg$y2_hat,
+  points(object_sim$data_agg$y2_hat,
                    object_sim$data_agg$bias_y1_lo_fit, col = "red",
                    type = "l", lty = 2)
-  graphics::points(object_sim$data_agg$y2_hat,
+  points(object_sim$data_agg$y2_hat,
                    object_sim$data_agg$bias_y1_up_fit, col = "red",
                    type = "l", lty = 2)
   
   if (two_objects) {
-    graphics::points(object2_sim$data_agg$y2_hat,
+    points(object2_sim$data_agg$y2_hat,
                      object2_sim$data_agg$bias_y1_lo_fit, col = "blue",
                      type = "l", lty = 2)
-    graphics::points(object2_sim$data_agg$y2_hat,
+    points(object2_sim$data_agg$y2_hat,
                      object2_sim$data_agg$bias_y1_up_fit, col = "blue",
                      type = "l", lty = 2)
   }
@@ -73,23 +75,23 @@ total_bias_plot <- function(object, object2 = NULL) {
   # Zero horizontal line
   graphics::abline(h = 0, col = "wheat2")
   
-  # y-graphics::axis
-  graphics::axis(2, col = "black", las = 1)
-  graphics::mtext("Bias", side = 2, line = 2)
-  graphics::box(col = "black")
+  # y-axis
+  axis(2, col = "black", las = 1)
+  mtext("Bias", side = 2, line = 2)
+  box(col = "black")
   
-  # x-graphics::axis
-  graphics::axis(1)
-  graphics::mtext("BLUP of x", side = 1, col = "black", line = 2)
+  # x-axis
+  axis(1)
+  mtext("BLUP of x", side = 1, col = "black", line = 2)
   
   # Legend
   if (!two_objects) {
-    graphics::legend("top", legend = c("Bias model 1", "95%CB"),
+    legend("top", legend = c("Bias model 1", "95%CB"),
                      pch = c(1, 19), col = c("red", "red"),
                      pt.cex = c(0, 0), y.intersp = 0.7, yjust = 0.2,
                      lty = c(1, 2), bty = "n", cex = 0.8)
   } else {
-    graphics::legend("top", legend = c("Bias model 1", "95%CB", "Bias model 2",
+    legend("top", legend = c("Bias model 1", "95%CB", "Bias model 2",
                                        "95%CB"),
                      pch = c(1, 19), col = c("red", "red", "blue", "blue"),
                      pt.cex = c(0, 0), y.intersp = 0.7, yjust = 0.2,
