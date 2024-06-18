@@ -7,7 +7,7 @@
 #' versus the BLUP of the latent trait, `x`, along with the bias and 95% limits
 #' of agreement with their 95% simultaneous confidence bands. 
 #' The function adds a second scale on the right axis, showing the percentage 
-#' of agreement index
+#' of agreement index.
 #'
 #' @inheritParams compare_plot
 #' 
