@@ -46,6 +46,10 @@ measure_model <- measure_compare(data1)
 #> [1] "Number of simulations set to 1000"
 ```
 
-    #> [1] "Generating Bias Plot ..."
+``` r
+### Display bias plot
+bias_plot(measure_model)
+#> [1] "Generating Bias Plot ..."
+```
 
 <img src="man/figures/README-bias_plot-1.png" width="100%" />

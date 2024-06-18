@@ -42,7 +42,7 @@ data(data1)
 measure_model <- measure_compare(data1)
 ```
 
-```{r bias_plot, echo = FALSE}
+```{r bias_plot}
 ### Display bias plot
 bias_plot(measure_model)
 ```
