@@ -6,11 +6,11 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of MethodCompare is to is to implement the methodology reported
-in the two papers : “Effective plots to assess bias and precision in
-method comparison studies” (P. Taffé) published in *Statistical Methods
-in Medical Research* (2018; 27:1650-1660), “Assessing bias, precision,
-and agreement in method comparison studies” (P. Taffé) published in
+The goal of MethodCompare is to implement the methodology reported in
+the two papers : “Effective plots to assess bias and precision in method
+comparison studies” (P. Taffé) published in *Statistical Methods in
+Medical Research* (2018; 27:1650-1660), “Assessing bias, precision, and
+agreement in method comparison studies” (P. Taffé) published in
 *Statistical Methods in Medical Research* (2020; 29:778-796). The
 package will generate graphs (the bias, total bias, precision,
 comparison, agreement without and after recalibration, percentage of
