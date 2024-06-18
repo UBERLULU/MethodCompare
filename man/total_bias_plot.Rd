@@ -13,7 +13,10 @@ total_bias_plot(object, object2 = NULL)
 If provided, will plot a second total bias estimate.}
 }
 \description{
-Plot total bias along with 95\% confidence bands
+This function draws the "total bias plot", which is used to visually assess
+the amount of bias.
+It is obtained by graphing the \code{bias} versus the BLUP of the latent trait,
+\code{x}, along with the 95\% simultaneous confidence bands.
 }
 \examples{
 ### Load the data

@@ -1,7 +1,10 @@
 #' Plot the percentage agreement before recalibration
 #' 
-#' Plot the percentage agreement before recalibration along with
-#' 95% confidence bands.
+#' This function draws the "percentage agreement plot" before recalibration, 
+#' which shows the amount of percentage agreement.
+#' It is obtained by graphing the percentage agreement index before recalibration 
+#' versus the BLUP of the latent trait, `x`, along with its 95% simultaneous 
+#' confidence bands.
 #'
 #' @inheritParams compare_plot
 #' 

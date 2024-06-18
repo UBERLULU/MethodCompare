@@ -1,7 +1,10 @@
 #' Plot the mean squared errors
 #' 
-#' Plot the mean squared errors from the two methods along with
-#' 95% confidence bands.
+#' This function draws the "MSE plot", which is used to compare the precision of 
+#' the two measurement methods without recalibrating the new method. 
+#' It is obtained by graphing the mean squared errors of `y1` (new method) and `y2` (reference 
+#' method) versus the BLUP of the latent trait, `x`, along with their 95% 
+#' simultaneous confidence bands.
 #'
 #' @inheritParams compare_plot
 #' 

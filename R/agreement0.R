@@ -1,7 +1,13 @@
 #' Plot the agreement before recalibration
 #' 
-#' Plot the agreement and percentage agreement before recalibration along with
-#' 95% confidence bands.
+#' This function draws the "agreement plot" before recalibration, which is used 
+#' to visually appraise the degree of agreement between the new and reference 
+#' methods, before recalibration of the new method.
+#' It is obtained by graphing a scatter plot of `y1-y2` (difference of the methods) 
+#' versus the BLUP of the latent trait, `x`, along with the bias and 95% limits
+#' of agreement with their 95% simultaneous confidence bands. 
+#' The function adds a second scale on the right axis, showing the percentage 
+#' of agreement index.
 #'
 #' @inheritParams compare_plot
 #' 
@@ -225,7 +231,8 @@ agreement0 <- function(object) {
   par(mar = c(3.5, 3.5, 3, 4) + 0.1)
   # Plot the agreement with no recalibration
   plot(data_y1_y2$y2_hat, data_y1_y2$diff, xlab = "",
-       ylab = "", axes = FALSE, col = "grey", ylim = c(min_y, max_y), cex = 0.5)
+       ylab = "", axes = FALSE, col = "darkgrey", ylim = c(min_y, max_y),
+       cex = 0.5, pch = 19)
   title(main = "Agreement plot", cex.main = 0.9)
   
   # Bias

@@ -9,8 +9,8 @@ measure_compare(data, new = "y1", ref = "y2", id = "id", nb_simul = 1000)
 }
 \arguments{
 \item{data}{a required data frame containing the identification number of the
-subject (id), the measurement values from the new measurement method (y1) and
-those from the reference method (y2).}
+subject (\code{id}), the measurement values from the new method (\code{y1}) and
+those from the reference method (\code{y2}).}
 
 \item{new}{an optional string. The column name containing the measurements of the new
 measurement method.}
@@ -21,20 +21,20 @@ reference method (at least two measurements per subject).}
 \item{id}{an optional string. The column name containing the subject
 identification numbers.}
 
-\item{nb_simul}{an optional number. The number of simulations used for confidence bands
-simulations.}
+\item{nb_simul}{an optional number. The number of simulations used for simultaneous
+confidence bands.}
 }
 \value{
 The function returns a list with the following items:
 \itemize{
 \item \code{models}: a list of models fitted in estimation procedure
-\item \code{sub}: the original data frame containing with renamed columns and
+\item \code{sub}: the original data frame with renamed columns and
 additional computed data
 \item \code{ref}: a data frame for the reference method and its related estimates
 \item \code{y1_y2}: a subset data frame of sub containing measurements for both
 methods, that is \code{y1} and \code{y2} columns are not NAs
 \item \code{new}: a data frame for the new method and its related estimates
-\item \code{agg}: a data frame made from ref and new containing a row per
+\item \code{agg}: a data frame made from \code{ref} and \code{new} containing a row per
 individual
 \item \code{sim_params}: estimated model coefficients used afterward
 \item \code{nb_simul}: the number of simulations used for confidence bands

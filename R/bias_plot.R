@@ -2,10 +2,10 @@
 #' 
 #' This function draws the "bias plot", which is used to visually assess the
 #' bias of the new method relative to the reference method. It is obtained by
-#' graphing a scatter plot of y1 (new method) and y2 (reference method) versus
-#' the BLUP of y2 along with the two regression lines. The function adds a
+#' graphing a scatter plot of `y1` (new method) and `y2` (reference method) versus
+#' the BLUP of the latent trait, `x```, along with the two regression lines. The function adds a
 #' second scale on the right axis, showing the relationship between the estimated
-#' amount of bias and BLUP of y2.
+#' amount of bias and BLUP of the latent trait, `x`.
 #'
 #' @inheritParams compare_plot
 #' 
@@ -49,7 +49,7 @@ bias_plot <- function(object) {
   par(mar = c(3.5, 3.5, 3, 4) + 0.1)
   ### plot scatter for y1 and y2 with respect to BLUP of x
   plot(data_sub$y2_hat, data_sub$y2, axes = FALSE, xlab = "", ylab = "",
-       col = "grey", ylim = c(min_y, max_y), cex = 0.5)
+       col = "darkgrey", ylim = c(min_y, max_y), cex = 0.5, pch = 19)
   title(main = "Bias", cex.main = 0.9)
   points(data_sub$y2_hat, data_sub$y1, col = "blue", pch = 19, cex = 0.5)
   
@@ -81,13 +81,13 @@ bias_plot <- function(object) {
   if (coef(lm_bias)[2] < 0) {
     legend("top", legend = c("Reference method (y2)", "New method (y1)",
                              "Bias"),
-           pch = c(1, 19), col = c("black", "blue", "red"),
+           pch = c(19, 19), col = c("black", "blue", "red"),
            pt.cex = c(1, 1, 0.0001), y.intersp = 0.7, yjust = 0.2,
            lty = c(1, 2, 1), bty = "n", cex = 0.8)
   } else {
     legend("topleft", legend = c("Reference method (y2)", "New method (y1)",
                                  "Bias"),
-           pch = c(1, 19), col = c("black", "blue", "red"),
+           pch = c(19, 19), col = c("black", "blue", "red"),
            pt.cex = c(1, 1, 0.0001), y.intersp = 0.7, yjust = 0.2,
            lty = c(1, 2, 1), bty = "n", cex = 0.8)
   }

@@ -10,8 +10,11 @@ mse(object)
 \item{object}{list returned by \link{measure_compare} function.}
 }
 \description{
-Plot the mean squared errors from the two methods along with
-95\% confidence bands.
+This function draws the "MSE plot", which is used to compare the precision of
+the two measurement methods without recalibrating the new method.
+It is obtained by graphing the mean squared errors of \code{y1} (new method) and \code{y2} (reference
+method) versus the BLUP of the latent trait, \code{x}, along with their 95\%
+simultaneous confidence bands.
 }
 \examples{
 ### Load the data

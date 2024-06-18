@@ -10,8 +10,11 @@ pct_agreement1(object)
 \item{object}{list returned by \link{measure_compare} function.}
 }
 \description{
-Plot the percentage agreement after recalibration along with
-95\% confidence bands.
+This function draws the "percentage agreement plot" after recalibration,
+which shows the amount of percentage agreement.
+It is obtained by graphing the percentage agreement index after recalibration
+versus the BLUP of the latent trait, \code{x}, along with its 95\% simultaneous
+confidence bands.
 }
 \examples{
 ### Load the data

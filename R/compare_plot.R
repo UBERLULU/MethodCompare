@@ -30,9 +30,9 @@ compare_plot <- function(object) {
   data_sub <- data_sub[order(data_sub$y2_hat), ]
   
   par(mar = c(3.5, 3.5, 2, 2) + 0.1)
-  plot(data_sub$y2_hat, data_sub$y2, pch = 1, cex = 0.5, col = "grey",
-       axes = FALSE, xlab = "", ylab = "", ylim = c(min - range * 0.1,
-                                                    max + range * 0.2))
+  plot(data_sub$y2_hat, data_sub$y2, cex = 0.5, pch = 19,
+       col = "darkgrey", axes = FALSE, xlab = "", ylab = "", 
+       ylim = c(min - range * 0.1, max + range * 0.2))
   title(main = "Comparison of the methods", cex.main = 0.9)
   ### Add the y axis
   axis(2, col = "black", las = 1)
@@ -49,6 +49,6 @@ compare_plot <- function(object) {
   graphics::abline(models[[6]]$coefficients, lwd = 2, lty = 2, col = "red")
   legend("topleft", legend = c("Reference method (y2)", "New method (y1)",
                                "New method (corrected)"),
-         pch = c(1, 19, 19), lty = c(1, 1, 2), col = c("black", "blue", "red"),
+         pch = c(19, 19, 19), lty = c(1, 1, 2), col = c("black", "blue", "red"),
          y.intersp = 0.7, yjust = 0.2, bty = "n", cex = 0.8)
 }

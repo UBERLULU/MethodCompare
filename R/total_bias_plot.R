@@ -1,6 +1,9 @@
 #' Plot total bias
 #' 
-#' Plot total bias along with 95% confidence bands
+#' This function draws the "total bias plot", which is used to visually assess 
+#' the amount of bias.
+#' It is obtained by graphing the `bias` versus the BLUP of the latent trait, 
+#' `x`, along with the 95% simultaneous confidence bands.
 #'
 #' @param object list returned by \link{measure_compare} function.
 #' @param object2 (optional) returned by \link{measure_compare} function. 

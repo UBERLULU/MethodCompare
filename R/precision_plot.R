@@ -1,10 +1,10 @@
 #' Plot the precision of the methods
 #' 
-#' This plot allows the visual comparison of the precision (i.e. standard 
-#' deviation) of the new measurement method with the reference standard by 
-#' creating a scatter plot of the estimated standard deviations, along with 
-#' their 95% confidence bands, against the best 
-#' linear prediction (BLUP) of the true latent trait x.
+#' This function draws the "precision plot", which allows the visual comparison 
+#' of the precision (i.e. standard deviation) of the new measurement method with 
+#' the reference standard by creating a scatter plot of the estimated standard 
+#' deviations, along with their 95% simultaneous confidence bands, against the 
+#' best linear prediction (BLUP) of the true latent trait, `x`.
 #'
 #' @inheritParams compare_plot
 #' @param object2 (optional) returned by \link{measure_compare} function. 
