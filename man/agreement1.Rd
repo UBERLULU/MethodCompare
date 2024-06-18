@@ -17,7 +17,7 @@ It is obtained by graphing a scatter plot of \code{y1-y2} (difference of the met
 versus the BLUP of the latent trait, \code{x}, along with the bias and 95\% limits
 of agreement with their 95\% simultaneous confidence bands.
 The function adds a second scale on the right axis, showing the percentage
-of agreement index
+of agreement index.
 }
 \examples{
 ### Load the data

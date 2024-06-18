@@ -13,7 +13,9 @@ bias_plot(object)
 This function draws the "bias plot", which is used to visually assess the
 bias of the new method relative to the reference method. It is obtained by
 graphing a scatter plot of \code{y1} (new method) and \code{y2} (reference method) versus
-the BLUP of the latent trait, \verb{x```, along with the two regression lines. The function adds a second scale on the right axis, showing the relationship between the estimated amount of bias and BLUP of the latent trait, }x`.
+the BLUP of the latent trait, \code{x}, along with the two regression lines.
+The function adds a second scale on the right axis, showing the relationship
+between the estimated amount of bias and BLUP of the latent trait, \code{x}.
 }
 \examples{
 ### Load the data

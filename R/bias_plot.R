@@ -3,9 +3,9 @@
 #' This function draws the "bias plot", which is used to visually assess the
 #' bias of the new method relative to the reference method. It is obtained by
 #' graphing a scatter plot of `y1` (new method) and `y2` (reference method) versus
-#' the BLUP of the latent trait, `x```, along with the two regression lines. The function adds a
-#' second scale on the right axis, showing the relationship between the estimated
-#' amount of bias and BLUP of the latent trait, `x`.
+#' the BLUP of the latent trait, `x`, along with the two regression lines. 
+#' The function adds a second scale on the right axis, showing the relationship 
+#' between the estimated amount of bias and BLUP of the latent trait, `x`.
 #'
 #' @inheritParams compare_plot
 #' 
