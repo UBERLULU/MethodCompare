@@ -21,6 +21,6 @@ simultaneous confidence bands.
 data(data1)
 ### Analysis
 measure_model <- measure_compare(data1)
-### Plot the bias
+### Plot the square root mean squared errors
 sqrt_mse(measure_model)
 }

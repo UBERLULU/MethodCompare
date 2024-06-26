@@ -18,7 +18,7 @@
 #' data(data1)
 #' ### Analysis
 #' measure_model <- measure_compare(data1)
-#' ### Plot the bias
+#' ### Plot the mean squared errors
 #' mse(measure_model)
 mse <- function(object) {
   print(" Generating MSE Plot ...")
