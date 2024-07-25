@@ -14,7 +14,7 @@
 #' ### Load the data
 #' data(data1)
 #' ### Analysis
-#' measure_model <- measure_compare(data1)
+#' measure_model <- measure_compare(data1, nb_simul=100)
 #' ### Plot the bias
 #' compare_plot(measure_model)
 compare_plot <- function(object) {
@@ -47,8 +47,10 @@ compare_plot <- function(object) {
   graphics::abline(c(0, 1), lwd = 2)
   graphics::abline(models[[4]]$coefficients, lwd = 2, lty = 1, col = "blue")
   graphics::abline(models[[6]]$coefficients, lwd = 2, lty = 2, col = "red")
-  legend("topleft", legend = c("Reference method (y2)", "New method (y1)",
-                               "New method (corrected)"),
+  legend("topleft",
+         legend = c(sprintf("Reference method (%s)", object$methods[2]),
+                    sprintf("New method (%s)", object$methods[1]),
+                    sprintf("Recalibrated new method (%s_corr)", object$methods[1])),
          pch = c(19, 19, 19), lty = c(1, 1, 2), col = c("black", "blue", "red"),
          y.intersp = 0.7, yjust = 0.2, bty = "n", cex = 0.8)
 }

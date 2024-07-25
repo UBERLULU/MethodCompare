@@ -2,18 +2,18 @@
 #' the reference method
 #' 
 #' `measure_compare()` implements the methodology reported in the paper:
-#'  Taffé P. Effective plots to assess bias and precision in method comparison
+#'  Taffé P. Effective plots to assess bias and precision in method comparison
 #'  studies. Stat Methods Med Res 2018;27:1650-1660. Other relevant references:
-#'  Taffé P, Peng M, Stagg V, Williamson T. Biasplot: A package to effective
+#'  Taffé P, Peng M, Stagg V, Williamson T. Biasplot: A package to effective
 #'  plots to assess bias and precision in method comparison studies. 
-#'  Stata J 2017;17:208-221. Taffé P, Peng M, Stagg V, Williamson T.
+#'  Stata J 2017;17:208-221. Taffé P, Peng M, Stagg V, Williamson T.
 #'  MethodCompare: An R package to assess bias and precision in method 
 #'  comparison studies. Stat Methods Med Res 2019;28:2557-2565. 
-#'  Taffé P, Halfon P, Halfon M. A new statistical methodology to assess bias
+#'  Taffé P, Halfon P, Halfon M. A new statistical methodology to assess bias
 #'  and precision overcomes the defects of the Bland & Altman method.
-#'  J Clin Epidemiol 2020;124:1-7. Taffé P. Assessing bias, precision, and
+#'  J Clin Epidemiol 2020;124:1-7. Taffé P. Assessing bias, precision, and
 #'  agreement in method comparison studies. Stat Methods Med Res 2020;29:778-796. 
-#'  Taffé P. When can the Bland-Altman limits of agreement method be used and
+#'  Taffé P. When can the Bland-Altman limits of agreement method be used and
 #'  when it should not be used. J Clin Epidemiol 2021; 137:176-181.
 #'
 #' @param data a required data frame containing the identification number of the 
@@ -26,7 +26,7 @@
 #' @param id an optional string. The column name containing the subject 
 #' identification numbers.
 #' @param nb_simul an optional number. The number of simulations used for simultaneous
-#'confidence bands.
+#' confidence bands.
 #'
 #' @return The function returns a list with the following items:
 #' * `models`: a list of models fitted in estimation procedure
@@ -43,6 +43,7 @@
 #'  simulations
 #' * `bias`: differential and proportional biases for new method and the
 #' associated 95 percent confidence intervals
+#' * `methods`: a list of methods names provided by the user
 #' 
 #' @importFrom stats fitted
 #' @importFrom stats vcov
@@ -56,7 +57,7 @@
 #' ### Load the data
 #' data(data1)
 #' ### Analysis
-#' measure_model <- measure_compare(data1)
+#' measure_model <- measure_compare(data1, nb_simul=100)
 
 measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 1000) {
   print("Computing differential and proportional biases")
@@ -64,6 +65,13 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
   print(paste("New method y variable:", new))
   print(paste("Reference method y variable:", ref))
   print(paste("Number of simulations set to", nb_simul))
+  
+  # Keep name as variable to return it
+  y1 <- new
+  y2 <- ref
+  
+  # Set variables as NULL for check() command
+  y2_hat <- fitted_y2 <- y1_corr <- sd_blup <- NULL
   
   # Data subset with only variables of interest
   data_sub <- data[, c(id, new, ref)]
@@ -269,6 +277,6 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
               ref = data_y2, y1_y2 = data_y1_y2, new = data_y1,
               agg = data_agg,
               sim_params = sim_params, nb_simul = nb_simul,
-              bias = bias
+              bias = bias, methods = list(y1, y2)
   ))
 }

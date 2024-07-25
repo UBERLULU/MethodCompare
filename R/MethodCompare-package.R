@@ -22,6 +22,10 @@
 #' 
 #' For other relevant references:
 #' 
+#' Blomet T, Taffé P, MethodCompare: An extended suite of R commands to assess 
+#' bias, precision, and agreement in method comparison studies.
+#' To be published...
+#' 
 #' Taffé P, Peng M, Stagg V, Williamson T. Biasplot: A package to effective 
 #' plots to assess bias and precision in method comparison studies. 
 #' Stata J 2017;17:208-221.

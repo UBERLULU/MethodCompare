@@ -21,7 +21,7 @@ between the estimated amount of bias and BLUP of the latent trait, \code{x}.
 ### Load the data
 data(data1)
 ### Analysis
-measure_model <- measure_compare(data1)
+measure_model <- measure_compare(data1, nb_simul=100)
 ### Plot the bias
 bias_plot(measure_model)
 }

@@ -17,7 +17,7 @@
 #' ### Load the data
 #' data(data1)
 #' ### Analysis
-#' measure_model <- measure_compare(data1)
+#' measure_model <- measure_compare(data1, nb_simul=100)
 #' ### Plot the mean squared errors
 #' mse(measure_model)
 mse <- function(object) {
@@ -185,7 +185,9 @@ mse <- function(object) {
   mtext("BLUP of x", side = 1, col = "black", line = 2)
   
   # Legend
-  legend("top", legend = c("Reference standard", "New method"), pch = c(1, 19),
-         col = c("black", "red"), pt.cex = c(0, 0), y.intersp = 0.7,
-         yjust = 0.2, lty = c(1, 1), bty = "n", cex = 0.8)
+  legend("top",
+         legend = c(sprintf("Reference method (%s)", object$methods[2]),
+                    sprintf("New method (%s)", object$methods[1])),
+         pch = c(1, 19), col = c("black", "red"), pt.cex = c(0, 0),
+         y.intersp = 0.7, yjust = 0.2, lty = c(1, 1), bty = "n", cex = 0.8)
 }

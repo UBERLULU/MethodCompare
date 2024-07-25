@@ -20,7 +20,7 @@
 #' ### Load the data
 #' data(data1)
 #' ### Analysis
-#' measure_model <- measure_compare(data1)
+#' measure_model <- measure_compare(data1, nb_simul=100)
 #' ### Plot the agreement after recalibration
 #' agreement0(measure_model)
 agreement1 <- function(object) {
@@ -251,7 +251,7 @@ agreement1 <- function(object) {
   
   # Left y-axis
   axis(2, col = "black", las = 1)
-  mtext("Difference: y1_corr - y2", side = 2, line = 2)
+  mtext("Difference (y1_corr - y2)", side = 2, line = 2)
   box(col = "black")
   
   # Add second plot: percentage agreement

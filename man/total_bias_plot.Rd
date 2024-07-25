@@ -22,7 +22,7 @@ It is obtained by graphing the \code{bias} versus the BLUP of the latent trait,
 ### Load the data
 data(data1)
 ### Analysis
-measure_model <- measure_compare(data1)
+measure_model <- measure_compare(data1, nb_simul=100)
 ### Plot the total bias
 total_bias_plot(measure_model)
 }

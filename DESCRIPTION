@@ -2,7 +2,7 @@ Package: MethodCompare
 Title: Evaluating Bias and Precision in Method Comparison Studies
 Version: 1.0.0
 Authors@R: c(
-    person("Thomas", "Blomet", email = "thomas.blomet@epfl.ch",
+    person("Thomas", "Blomet", email = "thomas.blomet@alumni.epfl.ch",
     role = c("aut", "cre")),
     person("Mingkai", "Peng", role = c("aut")),
     person("Patrick", "Taffé", email = "patrick.taffe@unisante.ch",

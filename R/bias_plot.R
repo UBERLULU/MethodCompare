@@ -18,7 +18,7 @@
 #' ### Load the data
 #' data(data1)
 #' ### Analysis
-#' measure_model <- measure_compare(data1)
+#' measure_model <- measure_compare(data1, nb_simul=100)
 #' ### Plot the bias
 #' bias_plot(measure_model)
 bias_plot <- function(object) {
@@ -79,14 +79,18 @@ bias_plot <- function(object) {
   ### Add the legend
   lm_bias <- lm(data_new$bias ~ data_new$y2_hat)
   if (coef(lm_bias)[2] < 0) {
-    legend("top", legend = c("Reference method (y2)", "New method (y1)",
-                             "Bias"),
+    legend("top",
+           legend = c(sprintf("Reference method (%s)", object$methods[2]),
+                      sprintf("New method (%s)", object$methods[1]),
+                      "Bias"),
            pch = c(19, 19), col = c("black", "blue", "red"),
            pt.cex = c(1, 1, 0.0001), y.intersp = 0.7, yjust = 0.2,
            lty = c(1, 2, 1), bty = "n", cex = 0.8)
   } else {
-    legend("topleft", legend = c("Reference method (y2)", "New method (y1)",
-                                 "Bias"),
+    legend("topleft",
+           legend = c(sprintf("Reference method (%s)", object$methods[2]),
+                      sprintf("New method (%s)", object$methods[1]),
+                      "Bias"),
            pch = c(19, 19), col = c("black", "blue", "red"),
            pt.cex = c(1, 1, 0.0001), y.intersp = 0.7, yjust = 0.2,
            lty = c(1, 2, 1), bty = "n", cex = 0.8)

@@ -41,27 +41,28 @@ individual
 simulations
 \item \code{bias}: differential and proportional biases for new method and the
 associated 95 percent confidence intervals
+\item \code{methods}: a list of methods names provided by the user
 }
 }
 \description{
 \code{measure_compare()} implements the methodology reported in the paper:
-Taffé P. Effective plots to assess bias and precision in method comparison
+Taffé P. Effective plots to assess bias and precision in method comparison
 studies. Stat Methods Med Res 2018;27:1650-1660. Other relevant references:
-Taffé P, Peng M, Stagg V, Williamson T. Biasplot: A package to effective
+Taffé P, Peng M, Stagg V, Williamson T. Biasplot: A package to effective
 plots to assess bias and precision in method comparison studies.
-Stata J 2017;17:208-221. Taffé P, Peng M, Stagg V, Williamson T.
+Stata J 2017;17:208-221. Taffé P, Peng M, Stagg V, Williamson T.
 MethodCompare: An R package to assess bias and precision in method
 comparison studies. Stat Methods Med Res 2019;28:2557-2565.
-Taffé P, Halfon P, Halfon M. A new statistical methodology to assess bias
+Taffé P, Halfon P, Halfon M. A new statistical methodology to assess bias
 and precision overcomes the defects of the Bland & Altman method.
-J Clin Epidemiol 2020;124:1-7. Taffé P. Assessing bias, precision, and
+J Clin Epidemiol 2020;124:1-7. Taffé P. Assessing bias, precision, and
 agreement in method comparison studies. Stat Methods Med Res 2020;29:778-796.
-Taffé P. When can the Bland-Altman limits of agreement method be used and
+Taffé P. When can the Bland-Altman limits of agreement method be used and
 when it should not be used. J Clin Epidemiol 2021; 137:176-181.
 }
 \examples{
 ### Load the data
 data(data1)
 ### Analysis
-measure_model <- measure_compare(data1)
+measure_model <- measure_compare(data1, nb_simul=1000)
 }
