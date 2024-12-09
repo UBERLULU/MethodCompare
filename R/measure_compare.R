@@ -114,7 +114,7 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
   data_y2$fit_y2 <- predict(model_2, data_y2)
   
   # Add residuals and absolute residuals of y2
-  data_y2$fitted_y2 <- data_y2$y2_hat # really useful ?
+  data_y2$fitted_y2 <- data_y2$y2_hat
   data_sub$fitted_y2 <- data_sub$y2_hat
   data_y2$resid_y2 <- data_y2$y2 - data_y2$y2_hat
   data_y2$resid_y2_abs <- abs(data_y2$resid_y2)
