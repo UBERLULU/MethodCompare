@@ -10,6 +10,8 @@
 #' of agreement index.
 #'
 #' @inheritParams compare_plot
+#' @param rarea if `TRUE`, draw the plot with shading areas between
+#' the confidence bands
 #' 
 #' @importFrom stats qnorm rnorm quantile predict
 #' @importFrom graphics title par points axis mtext box legend
@@ -23,7 +25,7 @@
 #' measure_model <- measure_compare(data1, nb_simul=100)
 #' ### Plot the agreement without recalibration
 #' agreement0(measure_model)}
-agreement0 <- function(object) {
+agreement0 <- function(object, rarea = FALSE) {
   print("Generating Agreement Plot without recalibration ...")
   
   # Extract the objects from the output
@@ -255,11 +257,31 @@ agreement0 <- function(object) {
   points(data_agg$y2_hat, data_agg$loa_lo_lo_fit, col = "orange",
          type = "l", lty = 2)
   
+  if (rarea) {
+    polygon(
+      c(data_agg$y2_hat, rev(data_agg$y2_hat)),
+      c(data_agg$loa_lo_lo_fit,
+        rev(data_agg$loa_lo_up_fit)),
+      col = rgb(1, 0.5, 0, alpha = 0.2),
+      border = NA
+    )
+  }
+  
   # Upper confidence bands
   points(data_agg$y2_hat, data_agg$loa_up_up_fit, col = "orange",
          type = "l", lty = 2)
   points(data_agg$y2_hat, data_agg$loa_up_lo_fit, col = "orange",
          type = "l", lty = 2)
+  
+  if (rarea) {
+    polygon(
+      c(data_agg$y2_hat, rev(data_agg$y2_hat)),
+      c(data_agg$loa_up_lo_fit,
+        rev(data_agg$loa_up_up_fit)),
+      col = rgb(1, 0.5, 0, alpha = 0.2),
+      border = NA
+    )
+  }
   
   # Left y-axis
   axis(2, col = "black", las = 1)

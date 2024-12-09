@@ -114,7 +114,7 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
   data_y2$fit_y2 <- predict(model_2, data_y2)
   
   # Add residuals and absolute residuals of y2
-  data_y2$fitted_y2 <- data_y2$y2_hat # really useful ?
+  data_y2$fitted_y2 <- data_y2$y2_hat
   data_sub$fitted_y2 <- data_sub$y2_hat
   data_y2$resid_y2 <- data_y2$y2 - data_y2$y2_hat
   data_y2$resid_y2_abs <- abs(data_y2$resid_y2)
@@ -142,7 +142,9 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
     vtheta2_1e * (data_y2$v_blup + data_y2$fitted_y2^2) +
     2 * covtheta2e * data_y2$fitted_y2
   
+  v_sig_res_y2 <- (pi / 2) * v_fit_abs_res_y2
   data_y2$v_sig2_res_y2 <- pi^2 * data_y2$fit_abs_res_y2^2 * v_fit_abs_res_y2
+  data_y2$se_sig_res_y2 <- sqrt(v_sig_res_y2)
   v_log_sig_res_y2 <- (1 / data_y2$fit_abs_res_y2^2) * v_fit_abs_res_y2
   data_y2$se_log_sig_res_y2 <- sqrt(v_log_sig_res_y2)
   
@@ -242,7 +244,7 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
     2 * covtheta1_corre * data_y1_complete$fitted_y2
   
   v_sig_res_y1_corr <- (pi / 2) * v_fit_res_y1_corr_abs
-  se_sig_res_y1_corr <- sqrt(v_sig_res_y1_corr)
+  data_y1$se_sig_res_y1_corr <- sqrt(v_sig_res_y1_corr)
   
   data_y1$v_sig2_res_y1_corr <- pi^2 *
     (data_y1$fit_res_y1_corr_abs^2) * v_fit_res_y1_corr_abs

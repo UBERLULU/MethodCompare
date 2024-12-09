@@ -7,6 +7,8 @@
 #' simultaneous confidence bands.
 #'
 #' @inheritParams compare_plot
+#' @param rarea if `TRUE`, draw the plot with shading areas between
+#' the confidence bands
 #' 
 #' @importFrom stats rnorm quantile
 #' @importFrom graphics title par points axis mtext box legend
@@ -20,7 +22,7 @@
 #' measure_model <- measure_compare(data1, nb_simul=100)
 #' ### Plot the square root mean squared errors
 #' sqrt_mse(measure_model)}
-sqrt_mse <- function(object) {
+sqrt_mse <- function(object, rarea = FALSE) {
   print("Generating sqrtMSE Plot ...")
   
   # Extract the objects from the output
@@ -189,6 +191,16 @@ sqrt_mse <- function(object) {
   points(data_agg$y2_hat, data_agg$sqrt_mse1_up_fit, col = "red",
          type = "l", lty = 2)
   
+  if (rarea) {
+    polygon(
+      c(data_agg$y2_hat, rev(data_agg$y2_hat)),
+      c(data_agg$sqrt_mse1_lo_fit,
+        rev(data_agg$sqrt_mse1_up_fit)),
+      col = rgb(1, 0, 0, alpha = 0.2),
+      border = NA
+    )
+  }
+  
   # MSE2
   points(data_agg$y2_hat, data_agg$sqrt_mse2, col = "black",
          type = "l", lwd = 2)
@@ -198,6 +210,16 @@ sqrt_mse <- function(object) {
          type = "l", lty = 2)
   points(data_agg$y2_hat, data_agg$sqrt_mse2_up_fit, col = "black",
          type = "l", lty = 2)
+  
+  if (rarea) {
+    polygon(
+      c(data_agg$y2_hat, rev(data_agg$y2_hat)),
+      c(data_agg$sqrt_mse2_lo_fit,
+        rev(data_agg$sqrt_mse2_up_fit)),
+      col = rgb(0, 0, 0, alpha = 0.2),
+      border = NA
+    )
+  }
   
   # y-axis
   axis(2, col = "black", las = 1)
