@@ -9,6 +9,8 @@
 #' @inheritParams compare_plot
 #' @param object2 (optional) returned by \link{measure_compare} function. 
 #' If provided, will plot a second precision estimate.
+#' @param log if `TRUE`, guarantee the simultaneous confidence bands around the 
+#' standard deviation of measurement errors to be strictly positive.
 #' 
 #' @importFrom graphics title par points axis mtext box legend
 #' 
@@ -21,19 +23,19 @@
 #' measure_model <- measure_compare(data1, nb_simul=100)
 #' ### Plot the precision of the two methods
 #' precision_plot(measure_model)}
-precision_plot <- function(object, object2 = NULL) {
+precision_plot <- function(object, object2 = NULL, log = FALSE, rarea = FALSE) {
   print("Generating Precision Plot ...")
   
   two_objects <- !is.null(object2)
   
   # Simulate for the first dataset
-  object_sim <- precision_simulation(object)
+  object_sim <- precision_simulation(object, log = log)
   min_y <- object_sim$min_y
   max_y <- object_sim$max_y
   
   # Simulate for the second dataset (if there is one)
   if (two_objects) {
-    object2_sim <- precision_simulation(object2)
+    object2_sim <- precision_simulation(object2, log = log)
     min_y <- min(min_y, object2_sim$min_y)
     max_y <- max(max_y, object2_sim$max_y)
   }
@@ -63,6 +65,16 @@ precision_plot <- function(object, object2 = NULL) {
                    object_sim$data_agg$sig_e1_corr_up_fit, col = "red",
                    type = "l", lty = 2)
   
+  if (rarea) {
+    polygon(
+      c(object_sim$data_agg$y2_hat, rev(object_sim$data_agg$y2_hat)),
+      c(object_sim$data_agg$sig_e1_corr_lo_fit,
+        rev(object_sim$data_agg$sig_e1_corr_up_fit)),
+      col = rgb(1, 0, 0, alpha = 0.2),
+      border = NA
+    )
+  }
+  
   if (two_objects) {
     points(object2_sim$data_agg$y2_hat,
                      object2_sim$data_agg$sig_e1_corr_lo_fit, col = "blue",
@@ -70,6 +82,16 @@ precision_plot <- function(object, object2 = NULL) {
     points(object2_sim$data_agg$y2_hat,
                      object2_sim$data_agg$sig_e1_corr_up_fit, col = "blue",
                      type = "l", lty = 2)
+    
+    if (rarea) {
+      polygon(
+        c(object2_sim$data_agg$y2_hat, rev(object2_sim$data_agg$y2_hat)),
+        c(object2_sim$data_agg$sig_e1_corr_lo_fit,
+          rev(object2_sim$data_agg$sig_e1_corr_up_fit)),
+        col = rgb(0, 0, 1, alpha = 0.2),
+        border = NA
+      )
+    }
   }
   
   # y2
@@ -84,6 +106,16 @@ precision_plot <- function(object, object2 = NULL) {
   points(object_sim$data_agg$y2_hat,
                    object_sim$data_agg$sig_e2_up_fit, col = "black",
                    type = "l", lty = 2)
+  
+  if (rarea) {
+    polygon(
+      c(object_sim$data_agg$y2_hat, rev(object_sim$data_agg$y2_hat)),
+      c(object_sim$data_agg$sig_e2_lo_fit,
+        rev(object_sim$data_agg$sig_e2_up_fit)),
+      col = rgb(0, 0, 0, alpha = 0.2),
+      border = NA
+    )
+  }
   
   # y-axis
   axis(2, col = "black", las = 1)

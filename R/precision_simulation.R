@@ -1,6 +1,6 @@
 #' @importFrom stats rnorm
 #' @importFrom stats quantile
-precision_simulation <- function(object) {
+precision_simulation <- function(object, log = FALSE) {
   # Extract the objects from the output
   data_agg <- object$agg
   data_new <- object$new
@@ -22,12 +22,18 @@ precision_simulation <- function(object) {
     thetas_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m2, Sigma = v2)
     
     sig_res_y2_j <- (thetas_j[, 1] + thetas_j[, 2] * blup_x_j) * sqrt(pi / 2)
+    log_sig_res_y2_j <- log(sig_res_y2_j)
     
     v_fit_abs_res_y2_j <- thetas_j[, 2]^2 * data_agg$v_blup + v2[1, 1] +
       v2[2, 2] * (data_agg$v_blup + blup_x_j^2) + 2 * v2[1, 2] * blup_x_j
     v_sig_res_y2_j <- (pi / 2) * v_fit_abs_res_y2_j
+    v_log_sig_res_y2_j = (1 / (sig_res_y2_j^2)) * v_sig_res_y2_j
     
-    d_j <- abs(sig_res_y2_j - data_agg$sig_res_y2) / sqrt(v_sig_res_y2_j)
+    if (log) {
+      d_j <- abs(log_sig_res_y2_j - data_agg$log_sig_res_y2) / sqrt(v_log_sig_res_y2_j)
+    } else {
+      d_j <- abs(sig_res_y2_j - data_agg$sig_res_y2) / sqrt(v_sig_res_y2_j) 
+    }
     max_d_j <- max(d_j)
     
     sim_max_d[[j]] <- max_d_j
@@ -35,14 +41,20 @@ precision_simulation <- function(object) {
   
   crit_value1 <- quantile(unlist(sim_max_d), c(0.95))
   
-  data_agg$sig_e2_lo <- exp(data_agg$log_sig_res_y2 - crit_value1 *
+  if (log) {
+    data_agg$sig_e2_lo <- exp(data_agg$log_sig_res_y2 - crit_value1 *
                               data_agg$se_log_sig_res_y2)
-  data_agg$sig_e2_up <- exp(data_agg$log_sig_res_y2 + crit_value1 *
+    data_agg$sig_e2_up <- exp(data_agg$log_sig_res_y2 + crit_value1 *
                               data_agg$se_log_sig_res_y2)
-  
+  } else {
+    data_agg$sig_e2_lo <- data_agg$sig_res_y2 - crit_value1 * data_agg$se_sig_res_y2
+    data_agg$sig_e2_up <- data_agg$sig_res_y2 + crit_value1 * data_agg$se_sig_res_y2
+  }
+
   fp <- function(...) mfp::fp(...)
   
-  frac_poly_sig_e2_lo <- mfp::mfp(sig_e2_lo ~ fp(fitted_y2, df = 4), data = data_agg)
+  frac_poly_sig_e2_lo <- mfp::mfp(sig_e2_lo ~ fp(fitted_y2, df = 4), 
+                                  data = data_agg)
   frac_poly_sig_e2_up <- mfp::mfp(sig_e2_up ~ fp(fitted_y2, df = 4),
                                   data = data_agg)
   
@@ -64,14 +76,21 @@ precision_simulation <- function(object) {
     
     sig_res_y1_corr_j <- (thetas_j[, 1] + thetas_j[, 2] * blup_x_j) *
       sqrt(pi / 2)
+    log_sig_res_y1_corr_j <- log(sig_res_y1_corr_j)
     
     v_fit_abs_res_y1_corr_j <- (thetas_j[, 2]^2) * data_agg$v_blup +
       v1[1, 1] + v1[2, 2] * (data_agg$v_blup + blup_x_j^2) +
       2 * v1[1, 2] * blup_x_j
     v_sig_res_y1_corr_j <- (pi / 2) * v_fit_abs_res_y1_corr_j
+    v_log_sig_res_y1_corr_j <- (1 / sig_res_y1_corr_j^2) * v_sig_res_y1_corr_j
     
-    d_j <- abs(sig_res_y1_corr_j -
-                 data_agg$sig_res_y1_corr) / sqrt(v_sig_res_y1_corr_j)
+    if (log) {
+      d_j <- abs(log_sig_res_y1_corr_j -
+                   data_agg$log_sig_res_y1_corr) / sqrt(v_log_sig_res_y1_corr_j)
+    } else {
+      d_j <- abs(sig_res_y1_corr_j -
+                   data_agg$sig_res_y1_corr) / sqrt(v_sig_res_y1_corr_j)
+    }
     max_d_j <- max(d_j)
     
     sim_max_d[[j]] <- max_d_j
@@ -79,12 +98,19 @@ precision_simulation <- function(object) {
   
   crit_value3 <- quantile(unlist(sim_max_d), c(0.95))
   
-  data_agg$sig_e1_corr_lo <- exp(data_agg$log_sig_res_y1_corr -
-                                   crit_value3 *
-                                   data_agg$se_log_sig_res_y1_corr)
-  data_agg$sig_e1_corr_up <- exp(data_agg$log_sig_res_y1_corr +
-                                   crit_value3 *
-                                   data_agg$se_log_sig_res_y1_corr)
+  if (log) {
+    data_agg$sig_e1_corr_lo <- exp(data_agg$log_sig_res_y1_corr -
+                                     crit_value3 *
+                                     data_agg$se_log_sig_res_y1_corr)
+    data_agg$sig_e1_corr_up <- exp(data_agg$log_sig_res_y1_corr +
+                                     crit_value3 *
+                                     data_agg$se_log_sig_res_y1_corr)
+  } else {
+    data_agg$sig_e1_corr_lo <- data_agg$sig_res_y1_corr - 
+                                  crit_value3 * data_agg$se_sig_res_y1_corr
+    data_agg$sig_e1_corr_up <- data_agg$sig_res_y1_corr +
+                                  crit_value3 * data_agg$se_sig_res_y1_corr
+  }
   
   frac_poly_sig_e1_corr_lo <- mfp::mfp(sig_e1_corr_lo ~ fp(y2_hat, df = 4),
                                        data = data_agg)
