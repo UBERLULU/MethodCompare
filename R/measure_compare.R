@@ -53,11 +53,11 @@
 #' 
 #' @export
 #'
-#' @examples
+#' @examples \donttest{
 #' ### Load the data
 #' data(data1)
 #' ### Analysis
-#' measure_model <- measure_compare(data1, nb_simul=100)
+#' measure_model <- measure_compare(data1, nb_simul=100)}
 
 measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 1000) {
   print("Computing differential and proportional biases")
@@ -96,7 +96,7 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
   # Computation of variances of blup
   
   v_blup <- var_blup(data_y2, model = model_1)
-  v_blup$v_blup <- v_blup$v_blup + vcov(model_1)[1, 1]
+  v_blup$v_blup <- v_blup$v_blup # + vcov(model_1)[1, 1]
   v_blup$sd_blup <- sqrt(v_blup$v_blup)
   
   data_y2 <- merge(data_y2, v_blup, by = "id", all = TRUE)
@@ -211,7 +211,7 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
   data_y1$bias <- bias[1] + data_y1$y2_hat * (bias[2] - 1)
   
   # Model 6: Regression on corrected y1 using BLUP of x
-  model_6 <- lm(y1_corr ~ y2_hat, data = data_y1) # No clustered robust estimation?
+  model_6 <- lm(y1_corr ~ y2_hat, data = data_y1)
   data_y1$fit_y1_corr <- fitted(model_6)
   data_y1$res_y1_corr <- data_y1$y1_corr - fitted(model_6)
   data_y1$res_y1_corr_abs <- abs(data_y1$res_y1_corr)

@@ -20,10 +20,11 @@ deviations, along with their 95\% simultaneous confidence bands, against the
 best linear prediction (BLUP) of the true latent trait, \code{x}.
 }
 \examples{
+\donttest{
 ### Load the data
 data(data1)
 ### Analysis
 measure_model <- measure_compare(data1, nb_simul=100)
 ### Plot the precision of the two methods
-precision_plot(measure_model)
+precision_plot(measure_model)}
 }

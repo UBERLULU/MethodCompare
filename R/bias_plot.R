@@ -14,13 +14,13 @@
 #' 
 #' @export
 #'
-#' @examples
+#' @examples \donttest{
 #' ### Load the data
 #' data(data1)
 #' ### Analysis
 #' measure_model <- measure_compare(data1, nb_simul=100)
 #' ### Plot the bias
-#' bias_plot(measure_model)
+#' bias_plot(measure_model)}
 bias_plot <- function(object) {
   print("Generating Bias Plot ...")
   

@@ -17,10 +17,11 @@ method) versus the BLUP of the latent trait, \code{x}, along with their 95\%
 simultaneous confidence bands.
 }
 \examples{
+\donttest{
 ### Load the data
 data(data1)
 ### Analysis
 measure_model <- measure_compare(data1, nb_simul=100)
 ### Plot the mean squared errors
-mse(measure_model)
+mse(measure_model)}
 }

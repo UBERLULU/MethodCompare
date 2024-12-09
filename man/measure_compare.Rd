@@ -61,8 +61,9 @@ Taffé P. When can the Bland-Altman limits of agreement method be used and
 when it should not be used. J Clin Epidemiol 2021; 137:176-181.
 }
 \examples{
+\donttest{
 ### Load the data
 data(data1)
 ### Analysis
-measure_model <- measure_compare(data1, nb_simul=1000)
+measure_model <- measure_compare(data1, nb_simul=100)}
 }

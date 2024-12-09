@@ -20,10 +20,11 @@ The function adds a second scale on the right axis, showing the percentage
 of agreement index.
 }
 \examples{
+\donttest{
 ### Load the data
 data(data1)
 ### Analysis
 measure_model <- measure_compare(data1, nb_simul=100)
 ### Plot the agreement after recalibration
-agreement0(measure_model)
+agreement0(measure_model)}
 }

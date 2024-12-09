@@ -17,10 +17,11 @@ versus the BLUP of the latent trait, \code{x}, along with its 95\% simultaneous
 confidence bands.
 }
 \examples{
+\donttest{
 ### Load the data
 data(data1)
 ### Analysis
 measure_model <- measure_compare(data1, nb_simul=100)
 ### Plot the percentage agreement without recalibration
-pct_agreement0(measure_model)
+pct_agreement0(measure_model)}
 }

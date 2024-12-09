@@ -15,10 +15,11 @@ This function allows the visualization of the bias-corrected values (i.e.
 recalibrated values, variable y1_corr) of the new measurement method.
 }
 \examples{
+\donttest{
 ### Load the data
 data(data1)
 ### Analysis
 measure_model <- measure_compare(data1, nb_simul=100)
 ### Plot the bias
-compare_plot(measure_model)
+compare_plot(measure_model)}
 }

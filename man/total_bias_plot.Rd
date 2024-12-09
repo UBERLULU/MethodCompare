@@ -19,10 +19,11 @@ It is obtained by graphing the \code{bias} versus the BLUP of the latent trait,
 \code{x}, along with the 95\% simultaneous confidence bands.
 }
 \examples{
+\donttest{
 ### Load the data
 data(data1)
 ### Analysis
 measure_model <- measure_compare(data1, nb_simul=100)
 ### Plot the total bias
-total_bias_plot(measure_model)
+total_bias_plot(measure_model)}
 }

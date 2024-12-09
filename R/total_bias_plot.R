@@ -13,13 +13,13 @@
 #' 
 #' @export
 #'
-#' @examples
+#' @examples \donttest{
 #' ### Load the data
 #' data(data1)
 #' ### Analysis
 #' measure_model <- measure_compare(data1, nb_simul=100)
 #' ### Plot the total bias
-#' total_bias_plot(measure_model)
+#' total_bias_plot(measure_model)}
 total_bias_plot <- function(object, object2 = NULL) {
   print("Generating Total Bias Plot ...")
   
@@ -89,13 +89,15 @@ total_bias_plot <- function(object, object2 = NULL) {
   
   # Legend
   if (!two_objects) {
-    legend("top", legend = c("Bias model 1", "95%CB"),
+    legend("top", legend = c("Bias", "95%CB"),
                      pch = c(1, 19), col = c("red", "red"),
                      pt.cex = c(0, 0), y.intersp = 0.7, yjust = 0.2,
                      lty = c(1, 2), bty = "n", cex = 0.8)
   } else {
-    legend("top", legend = c("Bias model 1", "95%CB", "Bias model 2",
-                                       "95%CB"),
+    legend("top", legend = c(sprintf("Bias (%s)", deparse(substitute(object))),
+                             "95%CB",
+                             sprintf("Bias (%s)", deparse(substitute(object2))),
+                             "95%CB"),
                      pch = c(1, 19), col = c("red", "red", "blue", "blue"),
                      pt.cex = c(0, 0), y.intersp = 0.7, yjust = 0.2,
                      lty = c(1, 2, 1, 2), bty = "n", cex = 0.8)

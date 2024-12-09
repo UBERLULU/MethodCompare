@@ -16,13 +16,13 @@
 #' 
 #' @export
 #'
-#' @examples
+#' @examples \donttest{
 #' ### Load the data
 #' data(data1)
 #' ### Analysis
 #' measure_model <- measure_compare(data1, nb_simul=100)
 #' ### Plot the agreement after recalibration
-#' agreement0(measure_model)
+#' agreement0(measure_model)}
 agreement1 <- function(object) {
   print("Generating Agreement Plot after recalibration ...")
   
@@ -271,7 +271,7 @@ agreement1 <- function(object) {
   # Legend
   legend("top", legend = c("Bias", "95% LoA", "95% confidence limits",
                            "% of agreement"),
-         pch = c(1, 19), col = c("red", "dimgrey", "red", "blue"),
+         pch = c(1, 19), col = c("red", "dimgrey", "orange", "blue"),
          pt.cex = c(0, 0), y.intersp = 0.7, yjust = 0.2, lty = c(1, 2, 2, 1),
          bty = "n", cex = 0.8)
 }

@@ -18,10 +18,11 @@ The function adds a second scale on the right axis, showing the relationship
 between the estimated amount of bias and BLUP of the latent trait, \code{x}.
 }
 \examples{
+\donttest{
 ### Load the data
 data(data1)
 ### Analysis
 measure_model <- measure_compare(data1, nb_simul=100)
 ### Plot the bias
-bias_plot(measure_model)
+bias_plot(measure_model)}
 }

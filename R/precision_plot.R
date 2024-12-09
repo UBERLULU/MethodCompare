@@ -14,13 +14,13 @@
 #' 
 #' @export
 #'
-#' @examples
+#' @examples \donttest{
 #' ### Load the data
 #' data(data1)
 #' ### Analysis
 #' measure_model <- measure_compare(data1, nb_simul=100)
 #' ### Plot the precision of the two methods
-#' precision_plot(measure_model)
+#' precision_plot(measure_model)}
 precision_plot <- function(object, object2 = NULL) {
   print("Generating Precision Plot ...")
   
@@ -87,7 +87,7 @@ precision_plot <- function(object, object2 = NULL) {
   
   # y-axis
   axis(2, col = "black", las = 1)
-  mtext("Standard deviation of the measurementr errors", side = 2, line = 2)
+  mtext("Standard deviation of the measurement errors", side = 2, line = 2)
   box(col = "black")
   
   # x-axis
@@ -97,17 +97,19 @@ precision_plot <- function(object, object2 = NULL) {
   # Legend
   if (!two_objects) {
     legend("top", legend = c(sprintf("Reference method (%s)", object$methods[2]),
-                             sprintf("Recalibrated new method (%s)_corr",
+                             sprintf("Recalibrated new method (%s_corr)",
                                      object$methods[1])),
            pch = c(1, 19), col = c("black", "red"), pt.cex = c(0, 0),
            y.intersp = 0.7, yjust = 0.2, lty = c(1, 1), bty = "n",
            cex = 0.8)
   } else {
     legend("top", legend = c(sprintf("Reference method (%s)", object$methods[2]),
-                             sprintf("Recalibrated new method of model 1 (%s_corr_1)",
-                                     object$methods[1]),
-                             sprintf("Recalibrated new method of model 2 (%s_corr_2)",
-                                     object2$methods[1])),
+                             sprintf("Recalibrated new method (%s_corr): %s",
+                                     object$methods[1],
+                                     deparse(substitute(object))),
+                             sprintf("Recalibrated new method (%s_corr): %s",
+                                     object2$methods[1],
+                                     deparse(substitute(object2)))),
            pch = c(1, 19), col = c("black", "red", "blue"), pt.cex = c(0, 0),
            y.intersp = 0.7, yjust = 0.2, lty = c(1, 1, 1), bty = "n", cex = 0.8)
   }
