@@ -27,6 +27,8 @@
 #' identification numbers.
 #' @param nb_simul an optional number. The number of simulations used for simultaneous
 #' confidence bands.
+#' @param if_value an optional number. Restrict the study to observed 
+#' measurement greater than the provided value, i.e., `y1 >= if_value && y1 >= if_value`.
 #'
 #' @return The function returns a list with the following items:
 #' * `models`: a list of models fitted in estimation procedure
@@ -59,7 +61,8 @@
 #' ### Analysis
 #' measure_model <- measure_compare(data1, nb_simul=100)}
 
-measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 1000) {
+measure_compare <- function(data, new = "y1", ref = "y2", id = "id", 
+                            nb_simul = 1000, if_value = NULL) {
   print("Computing differential and proportional biases")
   print(paste("id variable:", id))
   print(paste("New method y variable:", new))
@@ -84,6 +87,10 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
   
   # Drop rows where both y1 and y2 are missing
   data_sub <- data_sub[!(is.na(data_sub$y1) & is.na(data_sub$y2)), ]
+  
+  if (!is.null(if_value)) {
+    data_sub <- data_sub[!(data_sub$y1 < if_value | data_sub$y2 < if_value), ]
+  }
   
   # Create a dataset for reference method by excluding missing value
   data_y2 <- data_sub[!is.na(data_sub$y2), ]
@@ -275,9 +282,11 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id", nb_simul = 
   
   return(list(models = list(model_1, model_2, model_3, model_4, model_5,
                             model_6,  model_7),
-              sub = data_sub,
-              ref = data_y2, y1_y2 = data_y1_y2, new = data_y1,
-              agg = data_agg,
+              sub = data_sub[order(data_sub$id), ],
+              ref = data_y2[order(data_y2$id), ], 
+              y1_y2 = data_y1_y2[order(data_y1_y2$id), ], 
+              new = data_y1[order(data_y1$id), ],
+              agg = data_agg[order(data_agg$id), ],
               sim_params = sim_params, nb_simul = nb_simul,
               bias = bias, methods = list(y1, y2)
   ))

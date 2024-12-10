@@ -54,26 +54,26 @@ pct_agreement0 <- function(object) {
     v_blup_x_j <- min(data_old[data_old$id == j, ]$v_blup)
     sd_blup_x_j <- sqrt(v_blup_x_j)
     
-    blup_x_j <- rnorm(10000, mean = m_blup_x_j,
-                      sd = sd_blup_x_j)
+    blup_x_j <- abs(rnorm(1000, mean = m_blup_x_j, sd = sd_blup_x_j))
     
-    thetas1_j <- rockchalk::mvrnorm(10000, mu = m1, Sigma = v1)
-    thetas2_j <- rockchalk::mvrnorm(10000, mu = m2, Sigma = v2)
-    biases_j <- rockchalk::mvrnorm(10000, mu = m3, Sigma = v3)
+    thetas1_j <- rockchalk::mvrnorm(1000, mu = m1, Sigma = v1)
+    thetas2_j <- rockchalk::mvrnorm(1000, mu = m2, Sigma = v2)
+    biases_j <- rockchalk::mvrnorm(1000, mu = m3, Sigma = v3)
     
     sig_d_j <- sqrt((pi / 2) * (thetas1_j[, 1] + thetas1_j[, 2] * blup_x_j)^2 +
                       (pi / 2) * (thetas2_j[, 1] + thetas2_j[, 2] * blup_x_j)^2)
     bias_j <- biases_j[, 1] + blup_x_j * (biases_j[, 2] - 1)
     
     pct_agreement_j <- 1 - (qnorm(0.975) * sig_d_j + abs(bias_j)) /
-      abs(blup_x_j)
+      blup_x_j
+    pct_agreement_j <- pmax(pct_agreement_j, 0)
     
     data_agg$v_pct_agreement[data_agg$id == j] <- var(pct_agreement_j)
   }
   
   for (j in 1:nb_simul) {
-    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
-                      sd = data_agg$sd_blup)
+    blup_x_j <- abs(rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+                      sd = data_agg$sd_blup))
     
     thetas1_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m1, Sigma = v1)
     
@@ -92,7 +92,9 @@ pct_agreement0 <- function(object) {
     bias_j <- biases_j[, 1] + blup_x_j * (biases_j[, 2] - 1)
     
     pct_agreement_j <- 1 - (qnorm(0.975) * sig_d_j + abs(bias_j)) /
-      abs(blup_x_j)
+      blup_x_j
+    
+    pct_agreement_j <- pmax(pct_agreement_j, 0)
     
     d_j <- abs(pct_agreement_j - data_agg$pct_agreement) /
       sqrt(data_agg$v_pct_agreement)
@@ -117,6 +119,12 @@ pct_agreement0 <- function(object) {
   
   data_agg$pct_agreement_lo_fit <- predict(frac_poly_pct_agreement_lo)
   data_agg$pct_agreement_up_fit <- predict(frac_poly_pct_agreement_up)
+  
+  #low_fit <- lm(pct_agreement_lo ~ poly(fitted_y2, 2, raw = TRUE), data = data_agg)
+  #up_fit <- lm(pct_agreement_up ~ poly(fitted_y2, 2, raw = TRUE), data = data_agg)
+  
+  #data_agg$pct_agreement_lo_fit <- predict(low_fit)
+  #data_agg$pct_agreement_up_fit <- predict(up_fit)
   
   # Compute min and max values for y-axis
   min_y <- min(data_agg$pct_agreement_lo_fit, data_agg$pct_agreement_up_fit,

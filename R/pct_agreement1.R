@@ -51,18 +51,18 @@ pct_agreement1 <- function(object) {
     v_blup_x_j <- min(data_old[data_old$id == j, ]$v_blup)
     sd_blup_x_j <- sqrt(v_blup_x_j)
     
-    blup_x_j <- rnorm(10000, mean = m_blup_x_j,
-                      sd = sd_blup_x_j)
+    blup_x_j <- abs(rnorm(1000, mean = m_blup_x_j, sd = sd_blup_x_j))
     
-    thetas1_corr_j <- rockchalk::mvrnorm(10000, mu = m1, Sigma = v1)
-    thetas2_j <- rockchalk::mvrnorm(10000, mu = m2, Sigma = v2)
+    thetas1_corr_j <- rockchalk::mvrnorm(1000, mu = m1, Sigma = v1)
+    thetas2_j <- rockchalk::mvrnorm(1000, mu = m2, Sigma = v2)
     
     sig_d_corr_j <- sqrt((pi / 2) * (thetas1_corr_j[, 1] + thetas1_corr_j[, 2] *
                                        blup_x_j)^2 +
                            (pi / 2) * (thetas2_j[, 1] + thetas2_j[, 2] *
                                          blup_x_j)^2)
     
-    pct_agreement_corr_j <- 1 - (qnorm(0.975) * sig_d_corr_j) / abs(blup_x_j)
+    pct_agreement_corr_j <- 1 - (qnorm(0.975) * sig_d_corr_j) / blup_x_j
+    pct_agreement_corr_j <- pmax(pct_agreement_corr_j, 0)
     
     data_agg$v_pct_agreement_corr[data_agg$id == j] <- var(
       pct_agreement_corr_j
@@ -70,8 +70,8 @@ pct_agreement1 <- function(object) {
   }
   
   for (j in 1:nb_simul) {
-    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
-                      sd = data_agg$sd_blup)
+    blup_x_j <- abs(rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+                      sd = data_agg$sd_blup))
     
     thetas1_corr_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m1, Sigma = v1)
     thetas2_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m2, Sigma = v2)
@@ -81,7 +81,8 @@ pct_agreement1 <- function(object) {
                            (pi / 2) * (thetas2_j[, 1] + thetas2_j[, 2] *
                                          blup_x_j)^2)
     
-    pct_agreement_corr_j <- 1 - (qnorm(0.975) * sig_d_corr_j) / abs(blup_x_j)
+    pct_agreement_corr_j <- 1 - (qnorm(0.975) * sig_d_corr_j) / blup_x_j
+    pct_agreement_corr_j <- pmax(pct_agreement_corr_j, 0)
     
     d_j <- abs(pct_agreement_corr_j - data_agg$pct_agreement_corr) /
       sqrt(data_agg$v_pct_agreement_corr)
