@@ -79,7 +79,16 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id",
   # Data subset with only variables of interest
   data_sub <- data[, c(id, new, ref)]
   colnames(data_sub) <- c("id", "y1", "y2")
+  
+  if (!is.null(if_value)) {
+    id_smaller <- data_sub[!(data_sub$y1 < if_value | data_sub$y2 < if_value), ]$id
+    id_smaller <- unique(id_smaller)
+    
+    data_sub <- data_sub[data_sub$id %in% id_smaller, ]
+  }
+  
   data_sub$id <- factor(as.integer(data_sub$id))
+  print(data_sub$id)
   
   # Test if methods are equal and stop if they are 
   are_new_ref_equal <- identical(data_sub$y1, data_sub$y2)
@@ -87,10 +96,6 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id",
   
   # Drop rows where both y1 and y2 are missing
   data_sub <- data_sub[!(is.na(data_sub$y1) & is.na(data_sub$y2)), ]
-  
-  if (!is.null(if_value)) {
-    data_sub <- data_sub[!(data_sub$y1 < if_value | data_sub$y2 < if_value), ]
-  }
   
   # Create a dataset for reference method by excluding missing value
   data_y2 <- data_sub[!is.na(data_sub$y2), ]
