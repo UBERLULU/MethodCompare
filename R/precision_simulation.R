@@ -39,7 +39,7 @@ precision_simulation <- function(object, log = FALSE) {
     sim_max_d[[j]] <- max_d_j
   }
   
-  crit_value1 <- quantile(unlist(sim_max_d), c(0.95))
+  crit_value1 <- quantile(unlist(sim_max_d), c(0.95), na.rm = TRUE)
   
   if (log) {
     data_agg$sig_e2_lo <- exp(data_agg$log_sig_res_y2 - crit_value1 *
@@ -96,7 +96,7 @@ precision_simulation <- function(object, log = FALSE) {
     sim_max_d[[j]] <- max_d_j
   }
   
-  crit_value3 <- quantile(unlist(sim_max_d), c(0.95))
+  crit_value3 <- quantile(unlist(sim_max_d), c(0.95), na.rm = TRUE)
   
   if (log) {
     data_agg$sig_e1_corr_lo <- exp(data_agg$log_sig_res_y1_corr -

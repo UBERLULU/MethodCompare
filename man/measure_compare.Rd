@@ -5,7 +5,14 @@
 \title{Estimation of the amount of bias of the new measurement method relative to
 the reference method}
 \usage{
-measure_compare(data, new = "y1", ref = "y2", id = "id", nb_simul = 1000)
+measure_compare(
+  data,
+  new = "y1",
+  ref = "y2",
+  id = "id",
+  nb_simul = 1000,
+  if_value = NULL
+)
 }
 \arguments{
 \item{data}{a required data frame containing the identification number of the
@@ -23,6 +30,9 @@ identification numbers.}
 
 \item{nb_simul}{an optional number. The number of simulations used for simultaneous
 confidence bands.}
+
+\item{if_value}{an optional number. Restrict the study to observed
+measurement greater than the provided value, i.e., \code{y1 >= if_value && y1 >= if_value}.}
 }
 \value{
 The function returns a list with the following items:
