@@ -29,9 +29,9 @@ agreement1 <- function(object, rarea = FALSE) {
   print("Generating Agreement Plot after recalibration ...")
   
   # Extract the objects from the output
-  data_agg <- object$agg
-  data_new <- object$new
-  data_y1_y2 <- object$y1_y2
+  data_agg <- aggregate_data(object$data)
+  data_new <- data_agg[!is.na(data_agg$y1), ]
+  data_y1_y2 <- complete_data(object$data)
   params <- object$sim_params
   nb_simul <- object$nb_simul
   

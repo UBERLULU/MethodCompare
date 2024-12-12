@@ -2,8 +2,8 @@
 #' @importFrom stats quantile
 precision_simulation <- function(object, log = FALSE) {
   # Extract the objects from the output
-  data_agg <- object$agg
-  data_new <- object$new
+  data_agg <- aggregate_data(object$data)
+  data_new <- data_agg[!is.na(data_agg$y1), ]
   nb_simul <- object$nb_simul
   
   # Simulation for method 2

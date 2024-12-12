@@ -3,7 +3,7 @@
 total_bias_simulation <- function(object) {
   # Extract the objects from the output
   bias <- object$bias
-  data_agg <- object$agg
+  data_agg <- aggregate_data(object$data)
   nb_simul <- object$nb_simul
   
   # Retrieve useful params for simulation

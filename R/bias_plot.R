@@ -26,8 +26,9 @@ bias_plot <- function(object) {
   
   # Extract the objects from the output
   bias <- object$bias
-  data_sub <- object$sub
-  data_new <- object$new
+  data_sub <- object$data
+  data_agg <- aggregate_data(data_sub)
+  data_new <- data_agg[!is.na(data_agg$y1), ]
   models <- object$models
   subtitle <- paste("Differential bias:", round(bias[1, 1], 3), "; ",
                     "Proportional bias:", round(bias[2, 1], 3), sep = "")
@@ -67,7 +68,7 @@ bias_plot <- function(object) {
   ### Add second plot: bias axis
   par(new = TRUE)
   ## Plot the bias plot and put axis scale on right
-  plot(data_new$y2_hat, data_new$bias, xlab = "", ylab = "", axes = FALSE,
+  plot(data_new$y2_hat, data_new$bias_y1, xlab = "", ylab = "", axes = FALSE,
        col = "red", type = "l", lty = 1, lwd = 2)
   abline(h = 0, col = "black", lwd = 1)
   ## Add the right y axis and label
@@ -77,7 +78,7 @@ bias_plot <- function(object) {
   axis(1)
   mtext("BLUP of x", side = 1, col = "black", line = 2)
   ### Add the legend
-  lm_bias <- lm(data_new$bias ~ data_new$y2_hat)
+  lm_bias <- lm(data_new$bias_y1 ~ data_new$y2_hat)
   if (coef(lm_bias)[2] < 0) {
     legend("top",
            legend = c(sprintf("Reference method (%s)", object$methods[2]),

@@ -26,7 +26,7 @@ mse <- function(object, rarea = FALSE) {
   print(" Generating MSE Plot ...")
   
   # Extract the objects from the output
-  data_agg <- object$agg
+  data_agg <- aggregate_data(object$data)
   params <- object$sim_params
   nb_simul <- object$nb_simul
   

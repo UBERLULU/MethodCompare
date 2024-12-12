@@ -29,8 +29,8 @@ agreement0 <- function(object, rarea = FALSE) {
   print("Generating Agreement Plot without recalibration ...")
   
   # Extract the objects from the output
-  data_agg <- object$agg
-  data_y1_y2 <- object$y1_y2
+  data_agg <- aggregate_data(object$data)
+  data_y1_y2 <- complete_data(object$data)
   params <- object$sim_params
   bias <- object$bias
   nb_simul <- object$nb_simul
@@ -238,7 +238,7 @@ agreement0 <- function(object, rarea = FALSE) {
   title(main = "Agreement plot", cex.main = 0.9)
   
   # Bias
-  points(data_agg$y2_hat, data_agg$bias, col = "red",
+  points(data_agg$y2_hat, data_agg$bias_y1, col = "red",
          type = "l", lty = 1)
   
   # Add the subtitle
