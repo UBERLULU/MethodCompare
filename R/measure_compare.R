@@ -88,7 +88,6 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id",
   }
   
   data_sub$id <- factor(as.integer(data_sub$id))
-  print(data_sub$id)
   
   # Test if methods are equal and stop if they are 
   are_new_ref_equal <- identical(data_sub$y1, data_sub$y2)
@@ -123,7 +122,6 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id",
   # Model 2: regression of y2 based on BLUP of x
   model_2 <- estimatr::lm_robust(y2 ~ 0 + y2_hat, data = data_y2,
                                  se_type = "stata", clusters = id)
-  data_y2$fit_y2 <- predict(model_2, data_y2)
   
   # Add residuals and absolute residuals of y2
   data_y2$fitted_y2 <- data_y2$y2_hat
