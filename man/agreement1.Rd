@@ -4,7 +4,7 @@
 \alias{agreement1}
 \title{Plot the agreement after recalibration}
 \usage{
-agreement1(object, rarea = TRUE)
+agreement1(object, rarea = FALSE)
 }
 \arguments{
 \item{object}{list returned by \link{measure_compare} function.}

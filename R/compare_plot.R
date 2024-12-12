@@ -19,7 +19,7 @@
 #' compare_plot(measure_model)}
 compare_plot <- function(object) {
   print("Generating Comparison Plot ...")
-  data_sub <- object$sub
+  data_sub <- object$data
   models <- object$models
   
   max <- max(data_sub$y2, data_sub$y1, data_sub$y1_corr, na.rm = TRUE)

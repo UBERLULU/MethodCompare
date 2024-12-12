@@ -38,14 +38,8 @@ measurement greater than the provided value, i.e., \code{y1 >= if_value && y1 >=
 The function returns a list with the following items:
 \itemize{
 \item \code{models}: a list of models fitted in estimation procedure
-\item \code{sub}: the original data frame with renamed columns and
+\item \code{data}: the original data frame with renamed columns and
 additional computed data
-\item \code{ref}: a data frame for the reference method and its related estimates
-\item \code{y1_y2}: a subset data frame of sub containing measurements for both
-methods, that is \code{y1} and \code{y2} columns are not NAs
-\item \code{new}: a data frame for the new method and its related estimates
-\item \code{agg}: a data frame made from \code{ref} and \code{new} containing a row per
-individual
 \item \code{sim_params}: estimated model coefficients used afterward
 \item \code{nb_simul}: the number of simulations used for confidence bands
 simulations

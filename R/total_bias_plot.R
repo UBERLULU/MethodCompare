@@ -39,13 +39,13 @@ total_bias_plot <- function(object, object2 = NULL) {
   
   par(mar = c(3.5, 3.5, 3, 4) + 0.1)
   # Plot the bias
-  plot(object_sim$data_agg$y2_hat, object_sim$data_agg$bias, xlab = "", 
+  plot(object_sim$data_agg$y2_hat, object_sim$data_agg$bias_y1, xlab = "", 
        ylab = "", axes = FALSE, col = "red", type = "l", lwd = 2, 
        ylim = c(min_bias, max_bias))
   title(main = "Total bias plot", cex.main = 0.9)
   
   if (two_objects) {
-    points(object2_sim$data_agg$y2_hat, object2_sim$data_agg$bias, xlab = "", 
+    points(object2_sim$data_agg$y2_hat, object2_sim$data_agg$bias_y1, xlab = "", 
            ylab = "", col = "blue", type = "l", lwd = 2)
   }
   

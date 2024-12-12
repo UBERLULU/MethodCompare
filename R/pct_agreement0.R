@@ -24,8 +24,8 @@ pct_agreement0 <- function(object) {
   print("Generating Percentage Agreement Plot without recalibration ...")
   
   # Extract the objects from the output
-  data_old <- object$ref
-  data_agg <- object$agg
+  data_old <- object$data
+  data_agg <- aggregate_data(object$data)
   params <- object$sim_params
   nb_simul <- object$nb_simul
   
