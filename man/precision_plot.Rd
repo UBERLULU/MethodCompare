@@ -14,6 +14,9 @@ If provided, will plot a second precision estimate.}
 
 \item{log}{if \code{TRUE}, guarantee the simultaneous confidence bands around the
 standard deviation of measurement errors to be strictly positive.}
+
+\item{rarea}{if \code{TRUE}, draw the plot with shading areas between
+the confidence bands}
 }
 \description{
 This function draws the "precision plot", which allows the visual comparison

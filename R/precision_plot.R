@@ -11,8 +11,11 @@
 #' If provided, will plot a second precision estimate.
 #' @param log if `TRUE`, guarantee the simultaneous confidence bands around the 
 #' standard deviation of measurement errors to be strictly positive.
+#' @param rarea if `TRUE`, draw the plot with shading areas between
+#' the confidence bands
 #' 
-#' @importFrom graphics title par points axis mtext box legend
+#' @importFrom graphics title par points axis mtext box legend polygon
+#' @importFrom grDevices rgb
 #' 
 #' @export
 #'

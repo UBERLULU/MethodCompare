@@ -14,7 +14,8 @@
 #' the confidence bands
 #' 
 #' @importFrom stats qnorm rnorm quantile
-#' @importFrom graphics title par points axis mtext box legend
+#' @importFrom graphics title par points axis mtext box legend polygon
+#' @importFrom grDevices rgb
 #' 
 #' @export
 #'
