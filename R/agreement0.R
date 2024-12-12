@@ -39,7 +39,7 @@ agreement0 <- function(object, rarea = FALSE) {
   sig_d <- sqrt(sig2_d)
   
   data_agg$pct_agreement <- 1 - (qnorm(0.975) * sig_d + abs(data_agg$bias_y1)) /
-    abs(data_agg$fitted_y2)
+    abs(data_agg$y2_hat)
   
   data_agg$loa_up <- data_agg$bias_y1 + qnorm(0.975) * sig_d
   data_agg$loa_lo <- data_agg$bias_y1 + qnorm(0.025) * sig_d
@@ -73,7 +73,7 @@ agreement0 <- function(object, rarea = FALSE) {
   sim_max_d <- vector(mode = "list", length = nb_simul)
   
   for (j in 1:nb_simul) {
-    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$y2_hat,
                       sd = data_agg$sd_blup)
     
     thetas1_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m1, Sigma = v1)
@@ -135,9 +135,9 @@ agreement0 <- function(object, rarea = FALSE) {
   
   fp <- function(...) mfp::fp(...)
   
-  frac_poly_loa_up_up <- mfp::mfp(loa_up_up ~ fp(fitted_y2, df = 4),
+  frac_poly_loa_up_up <- mfp::mfp(loa_up_up ~ fp(y2_hat, df = 4),
                              data = data_agg)
-  frac_poly_loa_up_lo <- mfp::mfp(loa_up_lo ~ fp(fitted_y2, df = 4),
+  frac_poly_loa_up_lo <- mfp::mfp(loa_up_lo ~ fp(y2_hat, df = 4),
                              data = data_agg)
   
   data_agg$loa_up_up_fit <- predict(frac_poly_loa_up_up)
@@ -146,7 +146,7 @@ agreement0 <- function(object, rarea = FALSE) {
   sim_max_d <- vector(mode = "list", length = nb_simul)
   
   for (j in 1:nb_simul) {
-    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$y2_hat,
                       sd = data_agg$sd_blup)
     
     thetas1_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m1, Sigma = v1)
@@ -206,9 +206,9 @@ agreement0 <- function(object, rarea = FALSE) {
   data_agg$loa_lo_lo <- data_agg$loa_lo - crit_value5 * se_loa_lo
   data_agg$loa_lo_up <- data_agg$loa_lo + crit_value5 * se_loa_lo
   
-  frac_poly_loa_lo_up <- mfp::mfp(loa_lo_up ~ fp(fitted_y2, df = 4),
+  frac_poly_loa_lo_up <- mfp::mfp(loa_lo_up ~ fp(y2_hat, df = 4),
                              data = data_agg)
-  frac_poly_loa_lo_lo <- mfp::mfp(loa_lo_lo ~ fp(fitted_y2, df = 4),
+  frac_poly_loa_lo_lo <- mfp::mfp(loa_lo_lo ~ fp(y2_hat, df = 4),
                              data = data_agg)
   
   data_agg$loa_lo_up_fit <- predict(frac_poly_loa_lo_up)

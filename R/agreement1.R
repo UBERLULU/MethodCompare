@@ -25,7 +25,7 @@
 #' measure_model <- measure_compare(data1, nb_simul=100)
 #' ### Plot the agreement after recalibration
 #' agreement0(measure_model)}
-agreement1 <- function(object, rarea = TRUE) {
+agreement1 <- function(object, rarea = FALSE) {
   print("Generating Agreement Plot after recalibration ...")
   
   # Extract the objects from the output
@@ -39,7 +39,7 @@ agreement1 <- function(object, rarea = TRUE) {
   sig2_d_corr <- sig_d_corr^2
   
   data_agg$pct_agreement_corr <- 1 - (qnorm(0.975) * sig_d_corr) /
-    abs(data_agg$fitted_y2)
+    abs(data_agg$y2_hat)
   
   data_agg$loa_up_corr <- qnorm(0.975) * sig_d_corr
   data_agg$loa_lo_corr <- qnorm(0.025) * sig_d_corr
@@ -68,7 +68,7 @@ agreement1 <- function(object, rarea = TRUE) {
   sim_max_d <- vector(mode = "list", length = nb_simul)
   
   for (j in 1:nb_simul) {
-    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$y2_hat,
                       sd = data_agg$sd_blup)
     
     thetas1_corr_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m1, Sigma = v1)
@@ -127,9 +127,9 @@ agreement1 <- function(object, rarea = TRUE) {
     
   fp <- function(...) mfp::fp(...)
   
-  frac_poly_loa_up_corr_lo <- mfp::mfp(loa_up_corr_lo ~ fp(fitted_y2, df = 4),
+  frac_poly_loa_up_corr_lo <- mfp::mfp(loa_up_corr_lo ~ fp(y2_hat, df = 4),
                                   data = data_agg)
-  frac_poly_loa_up_corr_up <- mfp::mfp(loa_up_corr_up ~ fp(fitted_y2, df = 4),
+  frac_poly_loa_up_corr_up <- mfp::mfp(loa_up_corr_up ~ fp(y2_hat, df = 4),
                                   data = data_agg)
   
   data_agg$loa_up_corr_lo_fit <- predict(frac_poly_loa_up_corr_lo)
@@ -138,7 +138,7 @@ agreement1 <- function(object, rarea = TRUE) {
   sim_max_d <- vector(mode = "list", length = nb_simul)
   
   for (j in 1:nb_simul) {
-    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$y2_hat,
                       sd = data_agg$sd_blup)
     
     thetas1_corr_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m1, Sigma = v1)
@@ -193,9 +193,9 @@ agreement1 <- function(object, rarea = TRUE) {
   data_agg$loa_lo_corr_up <- data_agg$loa_lo_corr + crit_value8 *
     se_loa_lo_corr
   
-  frac_poly_loa_lo_corr_lo <- mfp::mfp(loa_lo_corr_lo ~ fp(fitted_y2, df = 4),
+  frac_poly_loa_lo_corr_lo <- mfp::mfp(loa_lo_corr_lo ~ fp(y2_hat, df = 4),
                                   data = data_agg)
-  frac_poly_loa_lo_corr_up <- mfp::mfp(loa_lo_corr_up ~ fp(fitted_y2, df = 4),
+  frac_poly_loa_lo_corr_up <- mfp::mfp(loa_lo_corr_up ~ fp(y2_hat, df = 4),
                                   data = data_agg)
   
   data_agg$loa_lo_corr_lo_fit <- predict(frac_poly_loa_lo_corr_lo)

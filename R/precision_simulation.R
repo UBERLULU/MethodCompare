@@ -17,7 +17,7 @@ precision_simulation <- function(object, log = FALSE) {
   sim_max_d <- vector(mode = "list", length = nb_simul)
   
   for (j in 1:nb_simul) {
-    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$y2_hat,
                              sd = data_agg$sd_blup)
     thetas_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m2, Sigma = v2)
     
@@ -53,9 +53,9 @@ precision_simulation <- function(object, log = FALSE) {
 
   fp <- function(...) mfp::fp(...)
   
-  frac_poly_sig_e2_lo <- mfp::mfp(sig_e2_lo ~ fp(fitted_y2, df = 4), 
+  frac_poly_sig_e2_lo <- mfp::mfp(sig_e2_lo ~ fp(y2_hat, df = 4), 
                                   data = data_agg)
-  frac_poly_sig_e2_up <- mfp::mfp(sig_e2_up ~ fp(fitted_y2, df = 4),
+  frac_poly_sig_e2_up <- mfp::mfp(sig_e2_up ~ fp(y2_hat, df = 4),
                                   data = data_agg)
   
   data_agg$sig_e2_lo_fit <- predict(frac_poly_sig_e2_lo)

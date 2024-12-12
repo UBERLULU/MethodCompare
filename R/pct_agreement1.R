@@ -35,7 +35,7 @@ pct_agreement1 <- function(object) {
   sig2_d_corr <- sig_d_corr^2
   
   data_agg$pct_agreement_corr <- 1 - (qnorm(0.975) * sig_d_corr) /
-    abs(data_agg$fitted_y2)
+    abs(data_agg$y2_hat)
   
   # Simulation parameters
   m1 <- matrix(params$model_7_coef, nrow = 1)
@@ -47,7 +47,7 @@ pct_agreement1 <- function(object) {
   sim_max_d <- vector(mode = "list", length = nb_simul)
   
   for (j in nb_ind) {
-    m_blup_x_j <- min(data_old[data_old$id == j, ]$fitted_y2)
+    m_blup_x_j <- min(data_old[data_old$id == j, ]$y2_hat)
     v_blup_x_j <- min(data_old[data_old$id == j, ]$v_blup)
     sd_blup_x_j <- sqrt(v_blup_x_j)
     
@@ -70,7 +70,7 @@ pct_agreement1 <- function(object) {
   }
   
   for (j in 1:nb_simul) {
-    blup_x_j <- abs(rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+    blup_x_j <- abs(rnorm(dim(data_agg)[1], mean = data_agg$y2_hat,
                       sd = data_agg$sd_blup))
     
     thetas1_corr_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m1, Sigma = v1)
@@ -100,10 +100,10 @@ pct_agreement1 <- function(object) {
   
   fp <- function(...) mfp::fp(...)
   
-  frac_poly_pct_agreement_c_lo <- mfp::mfp(pct_agreement_corr_lo ~ fp(fitted_y2,
+  frac_poly_pct_agreement_c_lo <- mfp::mfp(pct_agreement_corr_lo ~ fp(y2_hat,
                                                                  df = 4),
                                       data = data_agg)
-  frac_poly_pct_agreement_c_up <- mfp::mfp(pct_agreement_corr_up ~ fp(fitted_y2,
+  frac_poly_pct_agreement_c_up <- mfp::mfp(pct_agreement_corr_up ~ fp(y2_hat,
                                                                  df = 4),
                                       data = data_agg)
   

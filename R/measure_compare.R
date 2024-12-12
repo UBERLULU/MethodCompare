@@ -74,7 +74,7 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id",
   y2 <- ref
   
   # Set variables as NULL for check() command
-  y2_hat <- fitted_y2 <- y1_corr <- sd_blup <- NULL
+  y2_hat <- y1_corr <- sd_blup <- NULL
   
   # Data subset with only variables of interest
   data_sub <- data[, c(id, new, ref)]
@@ -124,8 +124,6 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id",
                                  se_type = "stata", clusters = id)
   
   # Add residuals and absolute residuals of y2
-  data_y2$fitted_y2 <- data_y2$y2_hat
-  data_sub$fitted_y2 <- data_sub$y2_hat
   data_y2$resid_y2 <- data_y2$y2 - data_y2$y2_hat
   data_y2$resid_y2_abs <- abs(data_y2$resid_y2)
   
@@ -149,8 +147,8 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id",
   data_y2$log_sig_res_y2 <- log(data_y2$sig_res_y2)
   
   v_fit_abs_res_y2 <- theta2_1e^2 * data_y2$v_blup + vtheta2_0e +
-    vtheta2_1e * (data_y2$v_blup + data_y2$fitted_y2^2) +
-    2 * covtheta2e * data_y2$fitted_y2
+    vtheta2_1e * (data_y2$v_blup + data_y2$y2_hat^2) +
+    2 * covtheta2e * data_y2$y2_hat
   
   v_sig_res_y2 <- (pi / 2) * v_fit_abs_res_y2
   data_y2$v_sig2_res_y2 <- pi^2 * data_y2$fit_abs_res_y2^2 * v_fit_abs_res_y2
@@ -168,7 +166,7 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id",
   
   # Differential and proportional bias of new method
   bias <- cbind(model_4$coefficients, confint(model_4))
-  data_y1$bias_y1 <- bias[1] + data_y1$fitted_y2 * (bias[2] - 1)
+  data_y1$bias_y1 <- bias[1] + data_y1$y2_hat * (bias[2] - 1)
   rownames(bias) <- c("Differential bias", "Proportional bias")
   colnames(bias)[1] <- "Estimate"
   model_4_cov <- vcov(model_4)
@@ -178,8 +176,8 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id",
   
   # Bias variance
   data_y1$v_bias_y1 <- (bias[2] - 1)^2 * data_y1$v_blup + v_diff_bias +
-    v_prop_bias * (data_y1$v_blup + data_y1$fitted_y2^2) +
-    2 * cov_bias * data_y1$fitted_y2
+    v_prop_bias * (data_y1$v_blup + data_y1$y2_hat^2) +
+    2 * cov_bias * data_y1$y2_hat
   data_y1$se_bias_y1 <- sqrt(data_y1$v_bias_y1)
   
   # Compute residuals of model_4
@@ -208,8 +206,8 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id",
   
   data_y1$v_fit_abs_res_y1 <- theta1_1e^2 * data_y1$v_blup +
     vtheta1_0e +
-    vtheta1_1e * (data_y1$v_blup + data_y1_complete$fitted_y2^2) +
-    2 * covtheta1e * data_y1_complete$fitted_y2
+    vtheta1_1e * (data_y1$v_blup + data_y1_complete$y2_hat^2) +
+    2 * covtheta1e * data_y1_complete$y2_hat
   
   v_sig_res_y1 <- (pi / 2) * data_y1$v_fit_abs_res_y1
   data_y1$v_sig2_res_y1 <- pi^2 * data_y1$fit_abs_res_y1^2 *
@@ -250,8 +248,8 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id",
   
   v_fit_res_y1_corr_abs <- (theta1_1_corre^2) * data_y1$v_blup +
     vtheta1_0_corre + vtheta1_1_corre * (data_y1$v_blup +
-                                           data_y1_complete$fitted_y2^2) +
-    2 * covtheta1_corre * data_y1_complete$fitted_y2
+                                           data_y1_complete$y2_hat^2) +
+    2 * covtheta1_corre * data_y1_complete$y2_hat
   
   v_sig_res_y1_corr <- (pi / 2) * v_fit_res_y1_corr_abs
   data_y1$se_sig_res_y1_corr <- sqrt(v_sig_res_y1_corr)
@@ -273,11 +271,11 @@ measure_compare <- function(data, new = "y1", ref = "y2", id = "id",
   )
   
   data_agg <- merge(data_sub,
-                    subset(data_y2, select = -c(y1, y2, y2_hat, fitted_y2, v_blup, sd_blup)),
+                    subset(data_y2, select = -c(y1, y2, y2_hat, v_blup, sd_blup)),
                     by = "id")
   data_agg <- merge(data_agg,
                     subset(data_y1,
-                           select = -c(y1, y2, y2_hat, fitted_y2, y1_corr, v_blup, sd_blup)),
+                           select = -c(y1, y2, y2_hat, y1_corr, v_blup, sd_blup)),
                     by = "id")
   data_agg <- data_agg[!duplicated(data_agg$id), ]
   data_y1_y2 <- data_sub[!(is.na(data_sub$y1) | is.na(data_sub$y2)), ]

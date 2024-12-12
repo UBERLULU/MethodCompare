@@ -52,7 +52,7 @@ mse <- function(object, rarea = FALSE) {
   sim_max_d <- vector(mode = "list", length = nb_simul)
   
   for (j in 1:nb_simul) {
-    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$y2_hat,
                       sd = data_agg$sd_blup)
     
     thetas1_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m1, Sigma = v1)
@@ -93,8 +93,8 @@ mse <- function(object, rarea = FALSE) {
   
   fp <- function(...) mfp::fp(...)
   
-  frac_poly_mse1_lo <- mfp::mfp(mse1_lo ~ fp(fitted_y2, df = 4), data = data_agg)
-  frac_poly_mse1_up <- mfp::mfp(mse1_up ~ fp(fitted_y2, df = 4), data = data_agg)
+  frac_poly_mse1_lo <- mfp::mfp(mse1_lo ~ fp(y2_hat, df = 4), data = data_agg)
+  frac_poly_mse1_up <- mfp::mfp(mse1_up ~ fp(y2_hat, df = 4), data = data_agg)
   
   data_agg$mse1_lo_fit <- predict(frac_poly_mse1_lo)
   data_agg$mse1_up_fit <- predict(frac_poly_mse1_up)
@@ -107,7 +107,7 @@ mse <- function(object, rarea = FALSE) {
   sim_max_d <- vector(mode = "list", length = nb_simul)
   
   for (j in 1:nb_simul) {
-    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$fitted_y2,
+    blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$y2_hat,
                       sd = data_agg$sd_blup)
     
     thetas2_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m2, Sigma = v2)
@@ -138,8 +138,8 @@ mse <- function(object, rarea = FALSE) {
   data_agg$mse2_lo <- data_agg$mse2 - crit_value11 * se_mse2
   data_agg$mse2_up <- data_agg$mse2 + crit_value11 * se_mse2
   
-  frac_poly_mse2_lo <- mfp::mfp(mse2_lo ~ fp(fitted_y2, df = 4), data = data_agg)
-  frac_poly_mse2_up <- mfp::mfp(mse2_up ~ fp(fitted_y2, df = 4), data = data_agg)
+  frac_poly_mse2_lo <- mfp::mfp(mse2_lo ~ fp(y2_hat, df = 4), data = data_agg)
+  frac_poly_mse2_up <- mfp::mfp(mse2_up ~ fp(y2_hat, df = 4), data = data_agg)
   
   data_agg$mse2_lo_fit <- predict(frac_poly_mse2_lo)
   data_agg$mse2_up_fit <- predict(frac_poly_mse2_up)
