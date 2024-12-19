@@ -10,7 +10,7 @@ agreement1(object, rarea = FALSE)
 \item{object}{list returned by \link{measure_compare} function.}
 
 \item{rarea}{if \code{TRUE}, draw the plot with shading areas between
-the confidence bands}
+the confidence bands.}
 }
 \description{
 This function draws the "agreement plot" after recalibration, which is used

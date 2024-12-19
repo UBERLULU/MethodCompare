@@ -12,7 +12,7 @@
 #' @param log if `TRUE`, guarantee the simultaneous confidence bands around the 
 #' standard deviation of measurement errors to be strictly positive.
 #' @param rarea if `TRUE`, draw the plot with shading areas between
-#' the confidence bands
+#' the confidence bands.
 #' 
 #' @importFrom graphics title par points axis mtext box legend polygon
 #' @importFrom grDevices rgb
@@ -45,28 +45,28 @@ precision_plot <- function(object, object2 = NULL, log = FALSE, rarea = FALSE) {
   
   par(mar = c(3.5, 3.5, 3, 4) + 0.1)
   # Plot the precision
-  plot(object_sim$data_agg$y2_hat, exp(object_sim$data_agg$log_sig_res_y1_corr),
+  plot(object_sim$data_agg$y2_hat, object_sim$data_agg$sig_res_y1_corr,
        xlab = "", ylab = "", axes = FALSE, col = "red", type = "l", lwd = 2,
        ylim = c(min_y, max_y))
   title(main = "Precision plot", cex.main = 0.9)
   
   if (two_objects) {
     points(object2_sim$data_agg$y2_hat,
-           exp(object2_sim$data_agg$log_sig_res_y1_corr), xlab = "", ylab = "",
+           object2_sim$data_agg$sig_res_y1_corr, xlab = "", ylab = "",
            col = "blue", type = "l", lwd = 2)
   }
   
   # Add the subtitle
   subtitle <- "with 95% confidence bands (after recalibration)"
-  mtext(subtitle, side = 3, cex = 0.8)
+  mtext(subtitle, side = 3, cex = 0.8, line = .2)
   
   # Confidence bands
   points(object_sim$data_agg$y2_hat,
-                   object_sim$data_agg$sig_e1_corr_lo_fit, col = "red",
-                   type = "l", lty = 2)
+         object_sim$data_agg$sig_e1_corr_lo_fit, col = "red",
+         type = "l", lty = 2)
   points(object_sim$data_agg$y2_hat,
-                   object_sim$data_agg$sig_e1_corr_up_fit, col = "red",
-                   type = "l", lty = 2)
+         object_sim$data_agg$sig_e1_corr_up_fit, col = "red",
+         type = "l", lty = 2)
   
   if (rarea) {
     polygon(
@@ -80,11 +80,11 @@ precision_plot <- function(object, object2 = NULL, log = FALSE, rarea = FALSE) {
   
   if (two_objects) {
     points(object2_sim$data_agg$y2_hat,
-                     object2_sim$data_agg$sig_e1_corr_lo_fit, col = "blue",
-                     type = "l", lty = 2)
+           object2_sim$data_agg$sig_e1_corr_lo_fit, col = "blue",
+           type = "l", lty = 2)
     points(object2_sim$data_agg$y2_hat,
-                     object2_sim$data_agg$sig_e1_corr_up_fit, col = "blue",
-                     type = "l", lty = 2)
+           object2_sim$data_agg$sig_e1_corr_up_fit, col = "blue",
+           type = "l", lty = 2)
     
     if (rarea) {
       polygon(
@@ -98,17 +98,17 @@ precision_plot <- function(object, object2 = NULL, log = FALSE, rarea = FALSE) {
   }
   
   # y2
-  points(object_sim$data_agg$y2_hat,
-                   exp(object_sim$data_agg$log_sig_res_y2), col = "black",
-                   type = "l", lwd = 2)
+  points(object_sim$data_agg$y2_hat, 
+         object_sim$data_agg$sig_res_y2, col = "black",
+         type = "l", lwd = 2)
   
   # Confidence bands
   points(object_sim$data_agg$y2_hat,
-                   object_sim$data_agg$sig_e2_lo_fit, col = "black",
-                   type = "l", lty = 2)
+         object_sim$data_agg$sig_e2_lo_fit, col = "black",
+         type = "l", lty = 2)
   points(object_sim$data_agg$y2_hat,
-                   object_sim$data_agg$sig_e2_up_fit, col = "black",
-                   type = "l", lty = 2)
+         object_sim$data_agg$sig_e2_up_fit, col = "black",
+         type = "l", lty = 2)
   
   if (rarea) {
     polygon(
@@ -122,27 +122,27 @@ precision_plot <- function(object, object2 = NULL, log = FALSE, rarea = FALSE) {
   
   # y-axis
   axis(2, col = "black", las = 1)
-  mtext("Standard deviation of the measurement errors", side = 2, line = 2)
+  mtext("Standard deviation of the measurement errors", side = 2, line = 2.5, cex = 0.8)
   box(col = "black")
   
   # x-axis
   axis(1)
-  mtext("BLUP of x", side = 1, col = "black", line = 2)
+  mtext("True latent trait", side = 1, col = "black", line = 2)
   
   # Legend
   if (!two_objects) {
-    legend("top", legend = c(sprintf("Reference method (%s)", object$methods[2]),
-                             sprintf("Recalibrated new method (%s_corr)",
+    legend("top", legend = c(sprintf("%s (Reference method)", object$methods[2]),
+                             sprintf("%s_corr (Recalibrated new method)",
                                      object$methods[1])),
            pch = c(1, 19), col = c("black", "red"), pt.cex = c(0, 0),
            y.intersp = 0.7, yjust = 0.2, lty = c(1, 1), bty = "n",
            cex = 0.8)
   } else {
-    legend("top", legend = c(sprintf("Reference method (%s)", object$methods[2]),
-                             sprintf("Recalibrated new method (%s_corr): %s",
+    legend("top", legend = c(sprintf("%s (Reference method)", object$methods[2]),
+                             sprintf("%s_corr (Recalibrated new method)",
                                      object$methods[1],
                                      deparse(substitute(object))),
-                             sprintf("Recalibrated new method (%s_corr): %s",
+                             sprintf("%s_corr (Recalibrated new method)",
                                      object2$methods[1],
                                      deparse(substitute(object2)))),
            pch = c(1, 19), col = c("black", "red", "blue"), pt.cex = c(0, 0),

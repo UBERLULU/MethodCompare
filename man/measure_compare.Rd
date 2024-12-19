@@ -32,7 +32,7 @@ identification numbers.}
 confidence bands.}
 
 \item{if_value}{an optional number. Restrict the study to observed
-measurement greater than the provided value, i.e., \code{y1 >= if_value && y1 >= if_value}.}
+measurement greater than the provided value, i.e., \code{y1 >= if_value && y2 >= if_value}.}
 }
 \value{
 The function returns a list with the following items:

@@ -18,11 +18,11 @@ precision_simulation <- function(object, log = FALSE) {
   
   for (j in 1:nb_simul) {
     blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$y2_hat,
-                             sd = data_agg$sd_blup)
+                      sd = data_agg$sd_blup)
     thetas_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m2, Sigma = v2)
     
     sig_res_y2_j <- (thetas_j[, 1] + thetas_j[, 2] * blup_x_j) * sqrt(pi / 2)
-    log_sig_res_y2_j <- log(sig_res_y2_j)
+    log_sig_res_y2_j <- suppressWarnings(log(sig_res_y2_j))
     
     v_fit_abs_res_y2_j <- thetas_j[, 2]^2 * data_agg$v_blup + v2[1, 1] +
       v2[2, 2] * (data_agg$v_blup + blup_x_j^2) + 2 * v2[1, 2] * blup_x_j
@@ -34,7 +34,7 @@ precision_simulation <- function(object, log = FALSE) {
     } else {
       d_j <- abs(sig_res_y2_j - data_agg$sig_res_y2) / sqrt(v_sig_res_y2_j) 
     }
-    max_d_j <- max(d_j)
+    max_d_j <- max(d_j, na.rm = TRUE)
     
     sim_max_d[[j]] <- max_d_j
   }
@@ -71,12 +71,12 @@ precision_simulation <- function(object, log = FALSE) {
   
   for (j in 1:nb_simul) {
     blup_x_j <- rnorm(dim(data_agg)[1], mean = data_agg$y2_hat,
-                             sd = data_agg$sd_blup)
+                      sd = data_agg$sd_blup)
     thetas_j <- rockchalk::mvrnorm(dim(data_agg)[1], mu = m1, Sigma = v1)
     
     sig_res_y1_corr_j <- (thetas_j[, 1] + thetas_j[, 2] * blup_x_j) *
       sqrt(pi / 2)
-    log_sig_res_y1_corr_j <- log(sig_res_y1_corr_j)
+    log_sig_res_y1_corr_j <- suppressWarnings(log(sig_res_y1_corr_j))
     
     v_fit_abs_res_y1_corr_j <- (thetas_j[, 2]^2) * data_agg$v_blup +
       v1[1, 1] + v1[2, 2] * (data_agg$v_blup + blup_x_j^2) +
@@ -91,7 +91,7 @@ precision_simulation <- function(object, log = FALSE) {
       d_j <- abs(sig_res_y1_corr_j -
                    data_agg$sig_res_y1_corr) / sqrt(v_sig_res_y1_corr_j)
     }
-    max_d_j <- max(d_j)
+    max_d_j <- max(d_j, na.rm = TRUE)
     
     sim_max_d[[j]] <- max_d_j
   }

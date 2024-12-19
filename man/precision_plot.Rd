@@ -16,7 +16,7 @@ If provided, will plot a second precision estimate.}
 standard deviation of measurement errors to be strictly positive.}
 
 \item{rarea}{if \code{TRUE}, draw the plot with shading areas between
-the confidence bands}
+the confidence bands.}
 }
 \description{
 This function draws the "precision plot", which allows the visual comparison
