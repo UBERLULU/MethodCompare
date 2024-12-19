@@ -8,7 +8,7 @@
 #'
 #' @inheritParams compare_plot
 #' @param rarea if `TRUE`, draw the plot with shading areas between
-#' the confidence bands
+#' the confidence bands.
 #' 
 #' @importFrom stats rnorm quantile
 #' @importFrom graphics title par points axis mtext box legend polygon
@@ -200,17 +200,17 @@ mse <- function(object, rarea = FALSE) {
   
   # y-axis
   axis(2, col = "black", las = 1)
-  mtext("MSE", side = 2, line = 2)
+  mtext("MSE", side = 2, line = 2.5, cex = 0.8)
   box(col = "black")
   
   # x-axis
   axis(1)
-  mtext("BLUP of x", side = 1, col = "black", line = 2)
+  mtext("True latent trait", side = 1, col = "black", line = 2, cex = 0.8)
   
   # Legend
   legend("top",
-         legend = c(sprintf("Reference method (%s)", object$methods[2]),
-                    sprintf("New method (%s)", object$methods[1])),
+         legend = c(sprintf("%s (Reference method)", object$methods[2]),
+                    sprintf("%s (New method)", object$methods[1])),
          pch = c(1, 19), col = c("black", "red"), pt.cex = c(0, 0),
          y.intersp = 0.7, yjust = 0.2, lty = c(1, 1), bty = "n", cex = 0.8)
 }

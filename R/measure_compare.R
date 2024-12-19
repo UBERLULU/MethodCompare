@@ -28,7 +28,7 @@
 #' @param nb_simul an optional number. The number of simulations used for simultaneous
 #' confidence bands.
 #' @param if_value an optional number. Restrict the study to observed 
-#' measurement greater than the provided value, i.e., `y1 >= if_value && y1 >= if_value`.
+#' measurement greater than the provided value, i.e., `y1 >= if_value && y2 >= if_value`.
 #'
 #' @return The function returns a list with the following items:
 #' * `models`: a list of models fitted in estimation procedure

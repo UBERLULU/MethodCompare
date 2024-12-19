@@ -47,8 +47,8 @@ pct_agreement1 <- function(object) {
   sim_max_d <- vector(mode = "list", length = nb_simul)
   
   for (j in nb_ind) {
-    m_blup_x_j <- min(data_old[data_old$id == j, ]$y2_hat)
-    v_blup_x_j <- min(data_old[data_old$id == j, ]$v_blup)
+    m_blup_x_j <- min(data_old[data_old$id == j, ]$y2_hat, na.rm = TRUE)
+    v_blup_x_j <- min(data_old[data_old$id == j, ]$v_blup, na.rm = TRUE)
     sd_blup_x_j <- sqrt(v_blup_x_j)
     
     blup_x_j <- abs(rnorm(1000, mean = m_blup_x_j, sd = sd_blup_x_j))
@@ -126,12 +126,12 @@ pct_agreement1 <- function(object) {
   # Plot the percentage agreement after recalibration
   plot(data_agg$y2_hat, data_agg$pct_agreement_corr, xlab = "",
        ylab = "", axes = FALSE, col = "blue",
-       ylim = c(max(min_y, 0), min(max_y, 1)), type = "l")
+       ylim = c(min_y, max_y), type = "l")
   title(main = "Percentage agreement plot", cex.main = 0.9)
   
   # Add the subtitle
   subtitle <- "(after recalibration)"
-  mtext(subtitle, side = 3, cex = 0.8)
+  mtext(subtitle, side = 3, cex = 0.8, line = .2)
   
   # 95% confidence bands
   points(data_agg$y2_hat, data_agg$pct_agreement_c_lo_fit, col = "blue",
@@ -141,12 +141,12 @@ pct_agreement1 <- function(object) {
   
   # y-axis
   axis(2, col = "black", las = 1)
-  mtext("Percentage agreement", side = 2, line = 2)
+  mtext("Percentage agreement", side = 2, line = 2.75, cex = 0.8)
   box(col = "black")
   
   # x-axis
   axis(1)
-  mtext("BLUP of x", side = 1, col = "black", line = 2)
+  mtext("True latent trait", side = 1, col = "black", line = 2, cex = 0.8)
   
   # Legend
   legend("top", legend = c("% agreement", "95% CB"),

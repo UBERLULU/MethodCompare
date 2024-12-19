@@ -55,7 +55,7 @@ total_bias_plot <- function(object, object2 = NULL) {
                       round(object_sim$bias[1, 1], 3), "; ",
                       "Proportional bias: ", round(object_sim$bias[2, 1], 3),
                       sep = "")
-    mtext(subtitle, side = 3, cex = 0.8)
+    mtext(subtitle, side = 3, cex = 0.8, line = .2)
   }
   
   # Confidence bands
@@ -80,12 +80,12 @@ total_bias_plot <- function(object, object2 = NULL) {
   
   # y-axis
   axis(2, col = "black", las = 1)
-  mtext("Bias", side = 2, line = 2)
+  mtext("Bias", side = 2, line = 2.5, cex = 0.8)
   box(col = "black")
   
   # x-axis
   axis(1)
-  mtext("BLUP of x", side = 1, col = "black", line = 2)
+  mtext("True latent trait", side = 1, col = "black", line = 2, cex = 0.8)
   
   # Legend
   if (!two_objects) {

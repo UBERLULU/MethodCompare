@@ -11,7 +11,7 @@
 #'
 #' @inheritParams compare_plot
 #' @param rarea if `TRUE`, draw the plot with shading areas between
-#' the confidence bands
+#' the confidence bands.
 #' 
 #' @importFrom stats qnorm rnorm quantile predict
 #' @importFrom graphics title par points axis mtext box legend polygon
@@ -244,7 +244,7 @@ agreement0 <- function(object, rarea = FALSE) {
   
   # Add the subtitle
   subtitle <- "(no recalibration)"
-  mtext(subtitle, side = 3, cex = 0.8)
+  mtext(subtitle, side = 3, cex = 0.8, line = .2)
   
   # 95% LoA
   points(data_agg$y2_hat, data_agg$loa_lo, col = "dimgrey",
@@ -286,7 +286,8 @@ agreement0 <- function(object, rarea = FALSE) {
   
   # Left y-axis
   axis(2, col = "black", las = 1)
-  mtext("Difference (y1 - y2)", side = 2, line = 2)
+  mtext(sprintf("Difference (%s - %s)", object$methods[1], object$methods[2]), 
+        side = 2, line = 2.5, cex = 0.8)
   box(col = "black")
   
   # Add second plot: percentage agreement
@@ -295,12 +296,12 @@ agreement0 <- function(object, rarea = FALSE) {
        axes = FALSE, col = "blue", type = "l", lwd = 1, ylim = c(0, 1))
   
   # Right y-axis
-  mtext("% of agreement", side = 4, col = "blue", line = 2.5)
+  mtext("% of agreement", side = 4, col = "blue", line = 2.5, cex = 0.8)
   axis(4, col = "blue", col.axis = "blue", las = 1)
   
   # x-axis
   axis(1)
-  mtext("BLUP of x", side = 1, col = "black", line = 2)
+  mtext("True latent trait", side = 1, col = "black", line = 2, cex = 0.8)
   
   # Legend
   legend("top", legend = c("Bias", "95% LoA", "95% confidence limits",

@@ -33,7 +33,7 @@ var_blup <- function(data, model) {
   
   inv_sumXWX <- Matrix::chol2inv(Matrix::chol(sumXWX))
   
-  vbi <- D %*% Zt %*% (invV - invV %*% X %*% Matrix::chol2inv(Matrix::chol(sumXWX)) %*%
+  vbi <- D %*% Zt %*% (invV - invV %*% X %*% inv_sumXWX %*%
                          Matrix::t(X) %*% invV) %*% Z %*% D
   
   return(data.frame(id = unique(data$id), v_blup = Matrix::diag(D - vbi)))
