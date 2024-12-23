@@ -14,10 +14,6 @@ var_blup <- function(data, model) {
   V <- Z %*% D %*% Matrix::t(Z) + R
   invV <- Matrix::chol2inv(chol(V))
   
-  res <- data$y2 - fitted(model)
-  
-  bi <- D %*% Matrix::t(Z) %*% invV %*% res
-  
   XWX <- Matrix::t(X) %*% invV %*% X
   inv_XWX <- Matrix::chol2inv(chol(XWX))
   
