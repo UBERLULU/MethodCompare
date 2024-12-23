@@ -127,7 +127,7 @@ precision_plot <- function(object, object2 = NULL, log = FALSE, rarea = FALSE) {
   
   # x-axis
   axis(1)
-  mtext("True latent trait", side = 1, col = "black", line = 2)
+  mtext("True latent trait", side = 1, col = "black", line = 2, cex = 0.8)
   
   # Legend
   if (!two_objects) {
@@ -139,10 +139,10 @@ precision_plot <- function(object, object2 = NULL, log = FALSE, rarea = FALSE) {
            cex = 0.8)
   } else {
     legend("top", legend = c(sprintf("%s (Reference method)", object$methods[2]),
-                             sprintf("%s_corr (Recalibrated new method)",
+                             sprintf("%s_corr (Recalibrated new method: %s)",
                                      object$methods[1],
                                      deparse(substitute(object))),
-                             sprintf("%s_corr (Recalibrated new method)",
+                             sprintf("%s_corr (Recalibrated new method: %s)",
                                      object2$methods[1],
                                      deparse(substitute(object2)))),
            pch = c(1, 19), col = c("black", "red", "blue"), pt.cex = c(0, 0),
