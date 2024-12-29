@@ -8,6 +8,8 @@
 #' @param object list returned by \link{measure_compare} function.
 #' @param object2 (optional) returned by \link{measure_compare} function. 
 #' If provided, will plot a second total bias estimate.
+#' @param rarea if `TRUE`, draw the plot with shading areas between
+#' the confidence bands.
 #' 
 #' @importFrom graphics title par points axis mtext box legend
 #' 
@@ -20,7 +22,7 @@
 #' measure_model <- measure_compare(data1, nb_simul=100)
 #' ### Plot the total bias
 #' total_bias_plot(measure_model)}
-total_bias_plot <- function(object, object2 = NULL) {
+total_bias_plot <- function(object, object2 = NULL, rarea = FALSE) {
   print("Generating Total Bias Plot ...")
   
   two_objects <- !is.null(object2)
@@ -66,6 +68,16 @@ total_bias_plot <- function(object, object2 = NULL) {
                    object_sim$data_agg$bias_y1_up_fit, col = "red",
                    type = "l", lty = 2)
   
+  if (rarea) {
+    polygon(
+      c(object_sim$data_agg$y2_hat, rev(object_sim$data_agg$y2_hat)),
+      c(object_sim$data_agg$bias_y1_lo_fit,
+        rev(object_sim$data_agg$bias_y1_up_fit)),
+      col = rgb(1, 0, 0, alpha = 0.2),
+      border = NA
+    )
+  }
+  
   if (two_objects) {
     points(object2_sim$data_agg$y2_hat,
                      object2_sim$data_agg$bias_y1_lo_fit, col = "blue",
@@ -73,6 +85,16 @@ total_bias_plot <- function(object, object2 = NULL) {
     points(object2_sim$data_agg$y2_hat,
                      object2_sim$data_agg$bias_y1_up_fit, col = "blue",
                      type = "l", lty = 2)
+    
+    if (rarea) {
+      polygon(
+        c(object2_sim$data_agg$y2_hat, rev(object2_sim$data_agg$y2_hat)),
+        c(object2_sim$data_agg$bias_y1_lo_fit,
+          rev(object2_sim$data_agg$bias_y1_up_fit)),
+        col = rgb(0, 0, 1, alpha = 0.2),
+        border = NA
+      )
+    }
   }
   
   # Zero horizontal line
